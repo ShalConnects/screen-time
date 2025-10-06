@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:elevation="12dp"
+    app:cardCornerRadius="20dp"
+    app:cardBackgroundColor="#00000000">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <!-- Compact Content -->
+        <LinearLayout
+            android:id="@+id/compactContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp"
+            android:background="@drawable/glass_background_compact"
+            android:gravity="center"
+            android:minWidth="80dp">
+
+            <!-- Time Only Display -->
+            <TextView
+                android:id="@+id/timeTextCompact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textSize="18sp"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold"
+                android:fontFamily="monospace"
+                android:shadowColor="#80000000"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"/>
+
+        </LinearLayout>
+
+        <!-- Action Buttons for Compact Mode -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:gravity="center">
+
+            <!-- Expand Button -->
+            <ImageButton
+                android:id="@+id/expandButtonCompact"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/button_glass"
+                android:src="@drawable/ic_expand"
+                android:scaleType="centerInside"
+                android:contentDescription="Expand"/>
+
+            <!-- Close Button -->
+            <ImageButton
+                android:id="@+id/closeButtonCompact"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/button_close"
+                android:src="@drawable/ic_close"
+                android:scaleType="centerInside"
+                android:contentDescription="Close"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</androidx.cardview.widget.CardView>

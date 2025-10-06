@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:elevation="14dp"
+    app:cardCornerRadius="24dp"
+    app:cardBackgroundColor="#00000000">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <!-- Progress Mode Content -->
+        <LinearLayout
+            android:id="@+id/progressContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/glass_background"
+            android:gravity="center"
+            android:minWidth="140dp">
+
+            <!-- Time Display -->
+            <TextView
+                android:id="@+id/timeTextProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textSize="20sp"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold"
+                android:fontFamily="monospace"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Progress Bar -->
+            <ProgressBar
+                android:id="@+id/progressBarMain"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="100dp"
+                android:layout_height="6dp"
+                android:progress="0"
+                android:max="100"
+                android:progressDrawable="@drawable/progress_bar_fill"
+                android:background="@drawable/progress_bar_background"/>
+
+            <!-- Goal Text -->
+            <TextView
+                android:id="@+id/goalTextProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Goal: 8h"
+                android:textSize="9sp"
+                android:textColor="@color/text_tertiary"
+                android:layout_marginTop="4dp"/>
+
+        </LinearLayout>
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="6dp"
+            android:gravity="center">
+
+            <!-- Mode Toggle -->
+            <ImageButton
+                android:id="@+id/modeButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/button_glass"
+                android:src="@drawable/ic_settings"
+                android:scaleType="centerInside"
+                android:contentDescription="Change mode"/>
+
+            <!-- Close Button -->
+            <ImageButton
+                android:id="@+id/closeButtonProgress"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/button_close"
+                android:src="@drawable/ic_close"
+                android:scaleType="centerInside"
+                android:contentDescription="Close"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Modern Glassmorphism Colors -->
+    <color name="glass_primary">#1AFFFFFF</color>
+    <color name="glass_secondary">#0DFFFFFF</color>
+    <color name="glass_border">#33FFFFFF</color>
+    <color name="glass_accent">#6366F1</color>
+    
+    <!-- Text Colors -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#E0E0E0</color>
+    <color name="text_tertiary">#B0B0B0</color>
+    
+    <!-- Status Colors -->
+    <color name="status_success">#10B981</color>
+    <color name="status_warning">#F59E0B</color>
+    <color name="status_error">#EF4444</color>
+    <color name="status_info">#3B82F6</color>
+    
+    <!-- Background Colors -->
+    <color name="background_primary">#121212</color>
+    <color name="background_secondary">#1E1E1E</color>
+    <color name="background_glass">#1AFFFFFF</color>
+    
+    <!-- Accent Colors -->
+    <color name="accent_primary">#6366F1</color>
+    <color name="accent_secondary">#8B5CF6</color>
+    <color name="accent_tertiary">#EC4899</color>
+    
+    <!-- Launcher Icon Colors -->
+    <color name="ic_launcher_background">#6366F1</color>
+</resources>

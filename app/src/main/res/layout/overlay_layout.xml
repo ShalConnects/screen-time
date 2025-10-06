@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:elevation="16dp"
+    app:cardCornerRadius="32dp"
+    app:cardBackgroundColor="#00000000">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <!-- Main Content Container -->
+        <LinearLayout
+            android:id="@+id/mainContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:background="@drawable/glass_background"
+            android:gravity="center"
+            android:minWidth="120dp">
+
+            <!-- Header with Date -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TODAY"
+                    android:textSize="11sp"
+                    android:textColor="#E0E0E0"
+                    android:letterSpacing="0.2"
+                    android:textStyle="bold"/>
+
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="4dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/circle_background"/>
+
+                <TextView
+                    android:id="@+id/dateText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dec 15"
+                    android:textSize="11sp"
+                    android:textColor="#B0B0B0"
+                    android:letterSpacing="0.1"/>
+
+            </LinearLayout>
+
+            <!-- Main Time Display -->
+            <TextView
+                android:id="@+id/timeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textSize="28sp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:fontFamily="monospace"
+                android:shadowColor="#80000000"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="4"
+                android:layout_marginBottom="4dp"/>
+
+            <!-- Progress Bar -->
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="80dp"
+                android:layout_height="4dp"
+                android:layout_marginTop="8dp"
+                android:progress="0"
+                android:max="100"
+                android:progressDrawable="@drawable/progress_bar_fill"
+                android:background="@drawable/progress_bar_background"/>
+
+            <!-- Goal Text -->
+            <TextView
+                android:id="@+id/goalText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Goal: 8h"
+                android:textSize="10sp"
+                android:textColor="#B0B0B0"
+                android:layout_marginTop="4dp"
+                android:alpha="0.8"/>
+
+        </LinearLayout>
+
+        <!-- Expanded Content (Hidden by default) -->
+        <LinearLayout
+            android:id="@+id/expandedContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:background="@drawable/glass_background_expanded"
+            android:gravity="center"
+            android:visibility="gone"
+            android:minWidth="200dp">
+
+            <!-- Top Apps List -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TOP APPS"
+                android:textSize="10sp"
+                android:textColor="#E0E0E0"
+                android:letterSpacing="0.2"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+
+            <LinearLayout
+                android:id="@+id/topAppsContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center">
+
+            <!-- Expand/Collapse Button -->
+            <ImageButton
+                android:id="@+id/expandButton"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/button_glass"
+                android:src="@drawable/ic_expand"
+                android:scaleType="centerInside"
+                android:contentDescription="Expand overlay"/>
+
+            <!-- Pause Button -->
+            <ImageButton
+                android:id="@+id/pauseButton"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/button_glass"
+                android:src="@drawable/ic_pause"
+                android:scaleType="centerInside"
+                android:contentDescription="Pause for 5 minutes"/>
+
+            <!-- Settings Button -->
+            <ImageButton
+                android:id="@+id/settingsButton"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/button_glass"
+                android:src="@drawable/ic_settings"
+                android:scaleType="centerInside"
+                android:contentDescription="Settings"/>
+
+            <!-- Close Button -->
+            <ImageButton
+                android:id="@+id/closeButton"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:background="@drawable/button_close"
+                android:src="@drawable/ic_close"
+                android:scaleType="centerInside"
+                android:contentDescription="Close overlay"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</androidx.cardview.widget.CardView>
+
+
