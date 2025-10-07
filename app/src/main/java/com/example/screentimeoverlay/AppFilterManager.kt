@@ -298,10 +298,3 @@ enum class FilterMode {
     CATEGORY_BASED  // Track based on category exclusions
 }
 
-data class AppInfo(
-    val packageName: String,
-    val appName: String,
-    val category: String,
-    val isWhitelisted: Boolean,
-    val isBlacklisted: Boolean
-)

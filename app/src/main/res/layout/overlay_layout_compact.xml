@@ -49,17 +49,6 @@
             android:layout_marginEnd="4dp"
             android:gravity="center">
 
-            <!-- Expand Button -->
-            <ImageButton
-                android:id="@+id/expandButtonCompact"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="2dp"
-                android:background="@drawable/button_glass"
-                android:src="@drawable/ic_expand"
-                android:scaleType="centerInside"
-                android:contentDescription="Expand"/>
-
             <!-- Close Button -->
             <ImageButton
                 android:id="@+id/closeButtonCompact"

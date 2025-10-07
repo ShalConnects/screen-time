@@ -78,11 +78,11 @@
                 android:id="@+id/progressBar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="80dp"
-                android:layout_height="4dp"
+                android:layout_height="6dp"
                 android:layout_marginTop="8dp"
                 android:progress="0"
                 android:max="100"
-                android:progressDrawable="@drawable/progress_bar_fill"
+                android:progressDrawable="@drawable/progress_bar_animated"
                 android:background="@drawable/progress_bar_background"/>
 
             <!-- Goal Text -->
@@ -139,39 +139,6 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:gravity="center">
-
-            <!-- Expand/Collapse Button -->
-            <ImageButton
-                android:id="@+id/expandButton"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_marginEnd="4dp"
-                android:background="@drawable/button_glass"
-                android:src="@drawable/ic_expand"
-                android:scaleType="centerInside"
-                android:contentDescription="Expand overlay"/>
-
-            <!-- Pause Button -->
-            <ImageButton
-                android:id="@+id/pauseButton"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_marginEnd="4dp"
-                android:background="@drawable/button_glass"
-                android:src="@drawable/ic_pause"
-                android:scaleType="centerInside"
-                android:contentDescription="Pause for 5 minutes"/>
-
-            <!-- Settings Button -->
-            <ImageButton
-                android:id="@+id/settingsButton"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_marginEnd="4dp"
-                android:background="@drawable/button_glass"
-                android:src="@drawable/ic_settings"
-                android:scaleType="centerInside"
-                android:contentDescription="Settings"/>
 
             <!-- Close Button -->
             <ImageButton

@@ -36,6 +36,21 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.11.0'
+    
+    // Android 12+ Material You support
+    implementation 'androidx.core:core-splashscreen:1.0.1'
+    implementation 'androidx.dynamicanimation:dynamicanimation:1.0.0'
+    
+    // Edge lighting and AOD support
+    implementation 'androidx.work:work-runtime-ktx:2.9.0'
+    implementation 'androidx.lifecycle:lifecycle-service:2.7.0'
+    
+    // Lock screen widgets
+    implementation 'androidx.glance:glance-appwidget:1.0.0'
+    implementation 'androidx.glance:glance-material3:1.0.0'
+    
+    // Samsung Edge Lighting - removed as it's not available in public repositories
+    // Note: Samsung-specific features should be implemented using reflection or conditional compilation
 }
 
 

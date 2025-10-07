@@ -39,10 +39,10 @@
                 android:id="@+id/progressBarMain"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="100dp"
-                android:layout_height="6dp"
+                android:layout_height="8dp"
                 android:progress="0"
                 android:max="100"
-                android:progressDrawable="@drawable/progress_bar_fill"
+                android:progressDrawable="@drawable/progress_bar_animated"
                 android:background="@drawable/progress_bar_background"/>
 
             <!-- Goal Text -->
@@ -66,17 +66,6 @@
             android:layout_marginTop="6dp"
             android:layout_marginEnd="6dp"
             android:gravity="center">
-
-            <!-- Mode Toggle -->
-            <ImageButton
-                android:id="@+id/modeButton"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginEnd="2dp"
-                android:background="@drawable/button_glass"
-                android:src="@drawable/ic_settings"
-                android:scaleType="centerInside"
-                android:contentDescription="Change mode"/>
 
             <!-- Close Button -->
             <ImageButton

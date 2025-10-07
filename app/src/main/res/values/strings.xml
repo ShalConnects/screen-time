@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">Screen Time</string>
     <string name="accessibility_service_description">Screen Time Overlay - Tracks app usage for screen time monitoring</string>
+    <string name="widget_description">Screen Time Widget - Quick access to your daily screen time stats</string>
 </resources>

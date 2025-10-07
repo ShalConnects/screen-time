@@ -25,11 +25,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reduce phone usage with awareness"
+        android:text="Track usage, set goals, and stay focused"
         android:textSize="16sp"
         android:textColor="@color/text_tertiary"
         android:layout_marginBottom="48dp"/>
 
+    <!-- Core Controls -->
     <Button
         android:id="@+id/startButton"
         android:layout_width="match_parent"
@@ -50,6 +51,7 @@
         android:layout_marginBottom="32dp"
         android:textStyle="bold"/>
 
+    <!-- Basic Settings -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -98,6 +100,31 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:background="@drawable/glass_background"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Auto-Hide Mode"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp"/>
+
+        <Switch
+            android:id="@+id/autoHideSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <!-- Daily Goal Setting -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -161,7 +188,7 @@
 
     </LinearLayout>
 
-    <!-- Display Mode Section -->
+    <!-- Display Modes -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -267,11 +294,11 @@
 
     </LinearLayout>
 
-    <!-- Advanced Features Section -->
+    <!-- Core Features -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Advanced Features"
+        android:text="Core Features"
         android:textSize="20sp"
         android:textColor="@color/text_primary"
         android:textStyle="bold"
@@ -321,7 +348,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Add Filters"
+            android:text="App Filters"
             android:textSize="12sp"
             android:padding="8dp"
             android:layout_marginEnd="4dp"
@@ -353,10 +380,354 @@
         android:maxLines="2"
         android:ellipsize="none"/>
 
+    <!-- Analytics Features -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="💡 Tap overlay to pause for 5 minutes\n💡 Drag to move, auto-snaps to edges\n📱 Per-app mode shows current app time\n🎯 Set daily goals for gentle nudges\n🔋 Battery optimization for reliability\n📊 Export weekly summaries"
+        android:text="Analytics and Insights"
+        android:textSize="20sp"
+        android:textColor="@color/text_primary"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+
+        <Button
+            android:id="@+id/sessionStatsButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Session Stats"
+            android:textSize="12sp"
+            android:padding="8dp"
+            android:layout_marginEnd="4dp"
+            android:maxLines="2"
+            android:ellipsize="none"/>
+
+        <Button
+            android:id="@+id/productivityButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Productivity"
+            android:textSize="12sp"
+            android:padding="8dp"
+            android:layout_marginStart="4dp"
+            android:maxLines="2"
+            android:ellipsize="none"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+
+        <Button
+            android:id="@+id/patternAnalysisButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Pattern Analysis"
+            android:textSize="12sp"
+            android:padding="8dp"
+            android:layout_marginEnd="4dp"
+            android:maxLines="2"
+            android:ellipsize="none"/>
+
+        <Button
+            android:id="@+id/breakTimeButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Break Times"
+            android:textSize="12sp"
+            android:padding="8dp"
+            android:layout_marginStart="4dp"
+            android:maxLines="2"
+            android:ellipsize="none"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+
+        <Button
+            android:id="@+id/weeklyViewButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Weekly View"
+            android:textSize="12sp"
+            android:padding="8dp"
+            android:layout_marginEnd="4dp"
+            android:maxLines="2"
+            android:ellipsize="none"/>
+
+        <Button
+            android:id="@+id/monthlyViewButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Monthly View"
+            android:textSize="12sp"
+            android:padding="8dp"
+            android:layout_marginStart="4dp"
+            android:maxLines="2"
+            android:ellipsize="none"/>
+
+    </LinearLayout>
+
+    <!-- Smart Notifications -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Smart Notifications"
+        android:textSize="20sp"
+        android:textColor="@color/text_primary"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+
+        <Button
+            android:id="@+id/notificationSettingsButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Notification Settings"
+            android:textSize="12sp"
+            android:padding="8dp"
+            android:layout_marginEnd="4dp"
+            android:maxLines="2"
+            android:ellipsize="none"/>
+
+        <Button
+            android:id="@+id/testNotificationButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Test Notifications"
+            android:textSize="12sp"
+            android:padding="8dp"
+            android:layout_marginStart="4dp"
+            android:maxLines="2"
+            android:ellipsize="none"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+
+        <Button
+            android:id="@+id/reminderSettingsButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Reminder Settings"
+            android:textSize="12sp"
+            android:padding="8dp"
+            android:layout_marginEnd="4dp"
+            android:maxLines="2"
+            android:ellipsize="none"/>
+
+        <Button
+            android:id="@+id/breakSettingsButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Break Settings"
+            android:textSize="12sp"
+            android:padding="8dp"
+            android:layout_marginStart="4dp"
+            android:maxLines="2"
+            android:ellipsize="none"/>
+
+    </LinearLayout>
+
+    <!-- Performance Monitoring -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Performance"
+        android:textSize="20sp"
+        android:textColor="@color/text_primary"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+
+        <Button
+            android:id="@+id/performanceButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Performance Metrics"
+            android:textSize="12sp"
+            android:padding="8dp"
+            android:layout_marginEnd="4dp"
+            android:maxLines="2"
+            android:ellipsize="none"/>
+
+        <Button
+            android:id="@+id/optimizationButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Optimization Tips"
+            android:textSize="12sp"
+            android:padding="8dp"
+            android:layout_marginStart="4dp"
+            android:maxLines="2"
+            android:ellipsize="none"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+
+        <Button
+            android:id="@+id/memoryButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Memory Stats"
+            android:textSize="12sp"
+            android:padding="8dp"
+            android:layout_marginEnd="4dp"
+            android:maxLines="2"
+            android:ellipsize="none"/>
+
+        <Button
+            android:id="@+id/batteryButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Battery Usage"
+            android:textSize="12sp"
+            android:padding="8dp"
+            android:layout_marginStart="4dp"
+            android:maxLines="2"
+            android:ellipsize="none"/>
+
+    </LinearLayout>
+
+    <!-- Basic Personalization -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Personalization"
+        android:textSize="20sp"
+        android:textColor="@color/text_primary"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+
+        <Button
+            android:id="@+id/customGoalsButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Custom Goals"
+            android:textSize="12sp"
+            android:padding="8dp"
+            android:layout_marginEnd="4dp"
+            android:maxLines="2"
+            android:ellipsize="none"/>
+
+        <Button
+            android:id="@+id/appCategoriesButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="App Categories"
+            android:textSize="12sp"
+            android:padding="8dp"
+            android:layout_marginStart="4dp"
+            android:maxLines="2"
+            android:ellipsize="none"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+
+        <Button
+            android:id="@+id/timezoneButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Timezone"
+            android:textSize="12sp"
+            android:padding="8dp"
+            android:layout_marginEnd="4dp"
+            android:maxLines="2"
+            android:ellipsize="none"/>
+
+        <Button
+            android:id="@+id/profilesButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Profiles"
+            android:textSize="12sp"
+            android:padding="8dp"
+            android:layout_marginStart="4dp"
+            android:maxLines="2"
+            android:ellipsize="none"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/personalizationButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Personalization Summary"
+        android:textSize="14sp"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp"
+        android:maxLines="2"
+        android:ellipsize="none"/>
+
+    <!-- Feature Summary -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="💡 Tap overlay to pause for 5 minutes\n💡 Drag to move, auto-snaps to edges\n📱 Per-app mode shows current app time\n🎯 Set daily goals for gentle nudges\n🔋 Battery optimization for reliability\n📊 Export weekly summaries\n📈 Session tracking and productivity scoring\n🧠 Usage pattern analysis and break recommendations\n📅 Weekly/monthly historical views\n🔔 Smart contextual reminders and break suggestions\n🎉 Goal celebrations and customizable alerts\n⚡ Performance monitoring and optimization\n🎯 Custom goals for weekdays/weekends\n📱 App categories and custom grouping\n🌍 Timezone support and auto-detection\n👤 Multiple profiles for work/personal use"
         android:textSize="14sp"
         android:textColor="@color/text_tertiary"
         android:gravity="center"
@@ -366,5 +737,3 @@
 </LinearLayout>
 
 </ScrollView>
-
-
