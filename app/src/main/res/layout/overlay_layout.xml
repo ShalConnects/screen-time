@@ -3,130 +3,174 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:elevation="16dp"
-    app:cardCornerRadius="32dp"
+    android:elevation="14dp"
+    app:cardCornerRadius="24dp"
     app:cardBackgroundColor="#00000000">
 
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <!-- Main Content Container -->
+        <!-- Main Container -->
         <LinearLayout
             android:id="@+id/mainContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp"
+            android:padding="16dp"
             android:background="@drawable/glass_background"
             android:gravity="center"
-            android:minWidth="120dp">
+            android:minWidth="160dp">
 
-            <!-- Header with Date -->
-            <LinearLayout
+            <!-- Title -->
+            <TextView
+                android:id="@+id/titleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="8dp">
+                android:text="Screen Time"
+                android:textSize="12sp"
+                android:textColor="#E0E0E0"
+                android:textStyle="bold"
+                android:letterSpacing="0.2"
+                android:layout_marginBottom="6dp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="TODAY"
-                    android:textSize="11sp"
-                    android:textColor="#E0E0E0"
-                    android:letterSpacing="0.2"
-                    android:textStyle="bold"/>
-
-                <View
-                    android:layout_width="4dp"
-                    android:layout_height="4dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/circle_background"/>
-
-                <TextView
-                    android:id="@+id/dateText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Dec 15"
-                    android:textSize="11sp"
-                    android:textColor="#B0B0B0"
-                    android:letterSpacing="0.1"/>
-
-            </LinearLayout>
-
-            <!-- Main Time Display -->
+            <!-- Time Display -->
             <TextView
                 android:id="@+id/timeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="00:00"
-                android:textSize="28sp"
-                android:textColor="#FFFFFF"
+                android:text="0h 00m"
+                android:textSize="22sp"
+                android:textColor="@color/text_primary"
                 android:textStyle="bold"
                 android:fontFamily="monospace"
                 android:shadowColor="#80000000"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="4"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:layout_marginBottom="2dp"/>
+
+            <!-- Seconds Display -->
+            <TextView
+                android:id="@+id/timeSeconds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00s"
+                android:textSize="11sp"
+                android:textColor="#B0B0B0"
                 android:layout_marginBottom="4dp"/>
 
-            <!-- Progress Bar -->
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="80dp"
-                android:layout_height="6dp"
-                android:layout_marginTop="8dp"
-                android:progress="0"
-                android:max="100"
-                android:progressDrawable="@drawable/progress_bar_animated"
-                android:background="@drawable/progress_bar_background"/>
+            <!-- Date -->
+            <TextView
+                android:id="@+id/dateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jan 1"
+                android:textSize="10sp"
+                android:textColor="#A0A0A0"
+                android:layout_marginBottom="6dp"/>
 
             <!-- Goal Text -->
             <TextView
                 android:id="@+id/goalText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Goal: 8h"
-                android:textSize="10sp"
-                android:textColor="#B0B0B0"
-                android:layout_marginTop="4dp"
-                android:alpha="0.8"/>
+                android:text="Goal: 8h 0m"
+                android:textSize="9sp"
+                android:textColor="@color/text_tertiary"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Progress Bar (hidden by default) -->
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="120dp"
+                android:layout_height="6dp"
+                android:progress="0"
+                android:max="100"
+                android:progressDrawable="@drawable/progress_bar_animated"
+                android:background="@drawable/progress_bar_background"
+                android:visibility="gone"/>
 
         </LinearLayout>
 
-        <!-- Expanded Content (Hidden by default) -->
+        <!-- Expanded Container -->
         <LinearLayout
             android:id="@+id/expandedContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp"
-            android:background="@drawable/glass_background_expanded"
+            android:padding="16dp"
+            android:background="@drawable/glass_background"
             android:gravity="center"
-            android:visibility="gone"
-            android:minWidth="200dp">
+            android:minWidth="200dp"
+            android:visibility="gone">
 
-            <!-- Top Apps List -->
+            <!-- Title -->
             <TextView
+                android:id="@+id/titleTextExpanded"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TOP APPS"
-                android:textSize="10sp"
+                android:text="Screen Time"
+                android:textSize="12sp"
                 android:textColor="#E0E0E0"
-                android:letterSpacing="0.2"
                 android:textStyle="bold"
+                android:letterSpacing="0.2"
                 android:layout_marginBottom="8dp"/>
 
+            <!-- Time Display -->
+            <TextView
+                android:id="@+id/timeTextExpanded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0h 00m"
+                android:textSize="24sp"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold"
+                android:fontFamily="monospace"
+                android:shadowColor="#80000000"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:layout_marginBottom="4dp"/>
+
+            <!-- Seconds Display -->
+            <TextView
+                android:id="@+id/timeSecondsExpanded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00s"
+                android:textSize="12sp"
+                android:textColor="#B0B0B0"
+                android:layout_marginBottom="6dp"/>
+
+            <!-- Date -->
+            <TextView
+                android:id="@+id/dateTextExpanded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jan 1"
+                android:textSize="10sp"
+                android:textColor="#A0A0A0"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Goal Text -->
+            <TextView
+                android:id="@+id/goalTextExpanded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Goal: 8h 0m"
+                android:textSize="10sp"
+                android:textColor="@color/text_tertiary"
+                android:layout_marginBottom="12dp"/>
+
+            <!-- Top Apps Container -->
             <LinearLayout
                 android:id="@+id/topAppsContainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="center"/>
+                android:minWidth="180dp"/>
 
         </LinearLayout>
 
@@ -136,24 +180,22 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="top|end"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="6dp"
             android:gravity="center">
 
             <!-- Close Button -->
             <ImageButton
                 android:id="@+id/closeButton"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:background="@drawable/button_close"
                 android:src="@drawable/ic_close"
                 android:scaleType="centerInside"
-                android:contentDescription="Close overlay"/>
+                android:contentDescription="Close"/>
 
         </LinearLayout>
 
     </FrameLayout>
 
 </androidx.cardview.widget.CardView>
-
-

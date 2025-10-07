@@ -11,7 +11,7 @@ data class ScreenTimeData(
     fun getFormattedTime(): String {
         val hours = TimeUnit.MILLISECONDS.toHours(totalTime)
         val minutes = TimeUnit.MILLISECONDS.toMinutes(totalTime) % 60
-        return String.format("%02d:%02d", hours, minutes)
+        return "${hours}h ${minutes}m"
     }
 }
 
@@ -23,7 +23,7 @@ data class AppUsage(
     fun getFormattedTime(): String {
         val hours = TimeUnit.MILLISECONDS.toHours(timeInForeground)
         val minutes = TimeUnit.MILLISECONDS.toMinutes(timeInForeground) % 60
-        return String.format("%02d:%02d", hours, minutes)
+        return "${hours}h ${minutes}m"
     }
 }
 

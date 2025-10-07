@@ -40,9 +40,11 @@ class OverlayService : Service() {
     private lateinit var windowManager: WindowManager
     private lateinit var overlayView: android.view.View
     private lateinit var timeTextView: TextView
+    private lateinit var timeSecondsTextView: TextView
     private lateinit var dateTextView: TextView
     private lateinit var progressBar: android.widget.ProgressBar
     private lateinit var goalTextView: TextView
+    private lateinit var titleTextView: TextView
     private lateinit var mainContainer: LinearLayout
     private lateinit var expandedContainer: LinearLayout
     private lateinit var topAppsContainer: LinearLayout
@@ -248,6 +250,13 @@ class OverlayService : Service() {
                 showOverlayTemporarily()
                 lastScreenTimeText = newText
             }
+        }
+
+        // Update seconds counter every tick - use current time seconds
+        val currentTime = System.currentTimeMillis()
+        val secs = TimeUnit.MILLISECONDS.toSeconds(currentTime) % 60
+        if (::timeSecondsTextView.isInitialized) {
+            timeSecondsTextView.text = String.format("%02ds", secs)
         }
         
         // Record update for adaptive analysis
@@ -470,10 +479,17 @@ class OverlayService : Service() {
     }
     
     private fun updateGoalText() {
-        goalTextView.text = "Goal: ${dailyGoal.maxHours}h ${dailyGoal.maxMinutes}m"
+        if (::goalTextView.isInitialized) {
+            goalTextView.text = "Goal: ${dailyGoal.maxHours}h ${dailyGoal.maxMinutes}m"
+        }
     }
     
     private fun updateProgressBar(totalTime: Long) {
+        // Only update progress bar for PROGRESS mode
+        if (currentDisplayMode != DisplayMode.PROGRESS) {
+            return
+        }
+        
         val goalMinutes = dailyGoal.getTotalMinutes()
         val progress = if (goalMinutes > 0) {
             val totalMinutes = TimeUnit.MILLISECONDS.toMinutes(totalTime)
@@ -490,13 +506,15 @@ class OverlayService : Service() {
     }
     
     private fun animateProgressBar(targetProgress: Int) {
-        val currentProgress = progressBar.progress
-        val animator = ValueAnimator.ofInt(currentProgress, targetProgress)
-        animator.duration = 500
-        animator.addUpdateListener { animation ->
-            progressBar.progress = animation.animatedValue as Int
+        if (::progressBar.isInitialized) {
+            val currentProgress = progressBar.progress
+            val animator = ValueAnimator.ofInt(currentProgress, targetProgress)
+            animator.duration = 500
+            animator.addUpdateListener { animation ->
+                progressBar.progress = animation.animatedValue as Int
+            }
+            animator.start()
         }
-        animator.start()
     }
     
     private fun updateTopAppsDisplay() {
@@ -549,20 +567,26 @@ class OverlayService : Service() {
     private fun initializeUIComponents() {
         when (currentDisplayMode) {
             DisplayMode.COMPACT -> {
+                titleTextView = overlayView.findViewById(R.id.titleTextCompact)
                 timeTextView = overlayView.findViewById(R.id.timeTextCompact)
+                timeSecondsTextView = overlayView.findViewById(R.id.timeSecondsCompact)
                 closeButton = overlayView.findViewById(R.id.closeButtonCompact)
             }
             DisplayMode.PROGRESS -> {
+                // Use progress layout elements
                 timeTextView = overlayView.findViewById(R.id.timeTextProgress)
                 progressBar = overlayView.findViewById(R.id.progressBarMain)
                 goalTextView = overlayView.findViewById(R.id.goalTextProgress)
                 closeButton = overlayView.findViewById(R.id.closeButtonProgress)
             }
             DisplayMode.DETAILED, DisplayMode.EXPANDED -> {
+                titleTextView = overlayView.findViewById(R.id.titleText)
                 timeTextView = overlayView.findViewById(R.id.timeText)
+                timeSecondsTextView = overlayView.findViewById(R.id.timeSeconds)
                 dateTextView = overlayView.findViewById(R.id.dateText)
-                progressBar = overlayView.findViewById(R.id.progressBar)
                 goalTextView = overlayView.findViewById(R.id.goalText)
+                // Progress bar exists in detailed layout (hidden by default)
+                progressBar = overlayView.findViewById(R.id.progressBar)
                 mainContainer = overlayView.findViewById(R.id.mainContainer)
                 expandedContainer = overlayView.findViewById(R.id.expandedContainer)
                 topAppsContainer = overlayView.findViewById(R.id.topAppsContainer)
@@ -813,15 +837,14 @@ class OverlayService : Service() {
                 }
             }
             DisplayMode.COMPACT -> {
-                // Apply to compact mode components
+                // Apply to compact mode components (no progress bar in compact layout)
                 val compactContainer = overlayView.findViewById<LinearLayout>(R.id.compactContainer)
-                val progressBar = overlayView.findViewById<android.widget.ProgressBar>(R.id.progressBar)
-                if (compactContainer != null && progressBar != null) {
+                if (compactContainer != null) {
                     smartThemingManager.applyTheme(
                         compactContainer,
                         timeTextView,
                         null,
-                        progressBar,
+                        null,
                         null
                     )
                 }
@@ -1066,7 +1089,8 @@ class OverlayService : Service() {
                 val modeName = intent.getStringExtra("mode")
                 val mode = when (modeName) {
                     "COMPACT" -> DisplayMode.COMPACT
-                    "PROGRESS" -> DisplayMode.PROGRESS
+                    // Progress mode removed: treat as DETAILED
+                    "PROGRESS" -> DisplayMode.DETAILED
                     "DETAILED" -> DisplayMode.DETAILED
                     "EXPANDED" -> DisplayMode.EXPANDED
                     else -> DisplayMode.DETAILED

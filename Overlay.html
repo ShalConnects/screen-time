@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Screen Time Overlay Preview</title>
+<style>
+  :root {
+    /* Tunables to match your Android layouts */
+    --corner-radius: 10px;         /* CardView corner radius */
+    --padding-compact: 12px;       /* compactContainer padding */
+    --padding-detailed: 20px;      /* mainContainer/expandedContainer padding */
+    --minw-compact: 100px;         /* minWidth for compact */
+    --minw-detailed: 120px;        /* minWidth for detailed */
+    --elevation-compact: 12px;     /* CardView elevation analog (shadow) */
+    --elevation-detailed: 16px;    /* higher shadow for detailed */
+    --glass-bg: rgba(255,255,255,0.08);
+    --glass-stroke: rgba(255,255,255,0.22);
+    --title: #E0E0E0;
+    --text-primary: #FFFFFF;
+    --text-secondary: #B0B0B0;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    background:
+      radial-gradient(60vw 60vh at 20% 20%, #0b1020, transparent 70%),
+      radial-gradient(60vw 60vh at 80% 80%, #101a2f, transparent 70%),
+      #0a0f1a;
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+  }
+
+  .row {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 28px;
+  }
+
+  .card {
+    background: transparent; /* CardView background transparent */
+    border-radius: var(--corner-radius);
+    position: relative;
+    /* Android elevation → CSS drop shadow approximation */
+    box-shadow:
+      0 2px 4px rgba(0,0,0,0.24),
+      0 8px 24px rgba(0,0,0,0.28);
+  }
+
+  .card.compact { filter: drop-shadow(0 6px var(--elevation-compact) rgba(0,0,0,0.35)); }
+  .card.detailed { filter: drop-shadow(0 8px var(--elevation-detailed) rgba(0,0,0,0.35)); }
+
+  /* Glass backgrounds (approximate @drawable/glass_background_* ) */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px) saturate(130%);
+    -webkit-backdrop-filter: blur(16px) saturate(130%);
+    border: 1px solid var(--glass-stroke);
+    border-radius: inherit;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0; /* margins between children handle spacing */
+    min-width: var(--minw-detailed);
+  }
+
+  .container.compact {
+    padding: var(--padding-compact);
+    min-width: var(--minw-compact);
+  }
+
+  .container.detailed {
+    padding: var(--padding-detailed);
+  }
+
+  .title {
+    color: var(--title);
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    font-size: 11px;
+    margin-bottom: 4px; /* compact: 4dp, detailed (we reduced earlier): 4dp */
+  }
+
+  .header {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px; /* detailed */
+    color: var(--title);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.2px;
+  }
+
+  .dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.8);
+  }
+
+  .date {
+    color: var(--text-secondary);
+    letter-spacing: 0.1px;
+    font-weight: 500;
+  }
+
+  .time {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-shadow: 0 0 0 rgba(0,0,0,0.5); /* offsetless shadow to match Dx/Dy removed */
+  }
+
+  .time.compact { font-size: 18px; }
+  .time.detailed { font-size: 28px; margin-bottom: 1px; }
+
+  .seconds {
+    color: var(--text-secondary);
+    font-size: 12px;
+    margin-bottom: 4px; /* detailed */
+  }
+
+  .seconds.compact {
+    font-size: 10px; /* compact */
+    margin-top: 2px;
+    margin-bottom: 0;
+  }
+
+  .goal {
+    color: var(--text-secondary);
+    font-size: 10px;
+    opacity: 0.8;
+  }
+
+  .progress {
+    width: 100%;
+    height: 4px;
+    margin-top: 6px; /* detailed */
+    background: rgba(255,255,255,0.12);
+    border-radius: 999px;
+    overflow: hidden;
+    display: none; /* shown by theming when needed */
+  }
+
+  .progress > span {
+    display: block;
+    height: 100%;
+    width: 42%;
+    background: linear-gradient(90deg, #6EC1FF, #558EFF);
+  }
+</style>
+</head>
+<body>
+  <div class="row">
+    <!-- Compact -->
+    <div class="card compact" style="border-radius: var(--corner-radius);">
+      <div class="container compact glass">
+        <div class="title">Screen Time</div>
+        <div class="time compact">0h 00m</div>
+        <div class="seconds compact">00s</div>
+      </div>
+    </div>
+
+    <!-- Detailed -->
+    <div class="card detailed" style="border-radius: var(--corner-radius);">
+      <div class="container detailed glass">
+        <div class="title">Screen Time</div>
+        <div class="header">
+          <span>TODAY</span>
+          <span class="dot"></span>
+          <span class="date">Dec 15</span>
+        </div>
+        <div class="time detailed">0h 00m</div>
+        <div class="seconds">00s</div>
+        <div class="goal">Goal: 8h</div>
+        <div class="progress"><span></span></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

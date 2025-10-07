@@ -175,7 +175,7 @@ class SmartThemingManager(private val context: Context) {
         mainContainer: LinearLayout,
         timeTextView: TextView,
         dateTextView: TextView?,
-        progressBar: android.widget.ProgressBar,
+        progressBar: android.widget.ProgressBar?,
         goalTextView: TextView?
     ) {
         val config = getCurrentConfig()
@@ -190,8 +190,8 @@ class SmartThemingManager(private val context: Context) {
         dateTextView?.setTextColor(config.secondaryTextColor)
         goalTextView?.setTextColor(config.secondaryTextColor)
         
-        // Apply progress bar
-        progressBar.progressDrawable = context.getDrawable(config.progressBarRes)
+        // Apply progress bar if available in this mode
+        progressBar?.progressDrawable = context.getDrawable(config.progressBarRes)
         
         // Add subtle animations
         animateThemeTransition(mainContainer)
@@ -228,19 +228,20 @@ class SmartThemingManager(private val context: Context) {
      * Add pulse effect when approaching goals
      */
     fun addPulseEffect(view: View) {
-        val pulseAnimator = ObjectAnimator.ofFloat(view, "scaleX", 1f, 1.05f, 1f)
-        val pulseAnimatorY = ObjectAnimator.ofFloat(view, "scaleY", 1f, 1.05f, 1f)
-        
-        // Set repeat properties on individual animators
-        pulseAnimator.repeatCount = ObjectAnimator.INFINITE
-        pulseAnimator.repeatMode = ObjectAnimator.REVERSE
-        pulseAnimatorY.repeatCount = ObjectAnimator.INFINITE
-        pulseAnimatorY.repeatMode = ObjectAnimator.REVERSE
-        
-        val animatorSet = AnimatorSet()
-        animatorSet.playTogether(pulseAnimator, pulseAnimatorY)
-        animatorSet.duration = 1000
-        animatorSet.start()
+        // Pulse animation disabled
+        // val pulseAnimator = ObjectAnimator.ofFloat(view, "scaleX", 1f, 1.05f, 1f)
+        // val pulseAnimatorY = ObjectAnimator.ofFloat(view, "scaleY", 1f, 1.05f, 1f)
+        // 
+        // // Set repeat properties on individual animators
+        // pulseAnimator.repeatCount = ObjectAnimator.INFINITE
+        // pulseAnimator.repeatMode = ObjectAnimator.REVERSE
+        // pulseAnimatorY.repeatCount = ObjectAnimator.INFINITE
+        // pulseAnimatorY.repeatMode = ObjectAnimator.REVERSE
+        // 
+        // val animatorSet = AnimatorSet()
+        // animatorSet.playTogether(pulseAnimator, pulseAnimatorY)
+        // animatorSet.duration = 1000
+        // animatorSet.start()
     }
     
     /**

@@ -88,6 +88,7 @@ class MainActivity : AppCompatActivity() {
         
         // Display mode controls
         val compactModeButton = findViewById<Button>(R.id.compactModeButton)
+        // Progress mode removed
         val progressModeButton = findViewById<Button>(R.id.progressModeButton)
         val detailedModeButton = findViewById<Button>(R.id.detailedModeButton)
         
@@ -184,8 +185,11 @@ class MainActivity : AppCompatActivity() {
             switchDisplayMode("COMPACT")
         }
         
-        progressModeButton?.setOnClickListener {
-            switchDisplayMode("PROGRESS")
+        // Hide/remove progress button if present in layout
+        progressModeButton?.apply {
+            isEnabled = false
+            alpha = 0f
+            setOnClickListener(null)
         }
         
         detailedModeButton?.setOnClickListener {

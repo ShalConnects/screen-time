@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:elevation="12dp"
-    app:cardCornerRadius="20dp"
-    app:cardBackgroundColor="#00000000">
+    android:layout_height="wrap_content">
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -18,16 +14,28 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="12dp"
-            android:background="@drawable/glass_background_compact"
+            android:background="@null"
             android:gravity="center"
-            android:minWidth="80dp">
+            android:minWidth="100dp">
 
-            <!-- Time Only Display -->
+            <!-- Title -->
+            <TextView
+                android:id="@+id/titleTextCompact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Screen Time"
+                android:textSize="11sp"
+                android:textColor="#E0E0E0"
+                android:textStyle="bold"
+                android:letterSpacing="0.2"
+                android:layout_marginBottom="4dp"/>
+
+            <!-- Time Display -->
             <TextView
                 android:id="@+id/timeTextCompact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="00:00"
+                android:text="0h 00m"
                 android:textSize="18sp"
                 android:textColor="@color/text_primary"
                 android:textStyle="bold"
@@ -37,23 +45,33 @@
                 android:shadowDy="1"
                 android:shadowRadius="2"/>
 
+            <!-- Seconds Display -->
+            <TextView
+                android:id="@+id/timeSecondsCompact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00s"
+                android:textSize="10sp"
+                android:textColor="#B0B0B0"
+                android:layout_marginTop="2dp"/>
+
         </LinearLayout>
 
-        <!-- Action Buttons for Compact Mode -->
+        <!-- Action Buttons -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="top|end"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="6dp"
             android:gravity="center">
 
             <!-- Close Button -->
             <ImageButton
                 android:id="@+id/closeButtonCompact"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:background="@drawable/button_close"
                 android:src="@drawable/ic_close"
                 android:scaleType="centerInside"
@@ -63,4 +81,4 @@
 
     </FrameLayout>
 
-</androidx.cardview.widget.CardView>
+</FrameLayout>

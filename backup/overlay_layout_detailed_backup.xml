@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:elevation="12dp"
+    app:cardCornerRadius="0dp"
+    app:cardBackgroundColor="#00000000">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <!-- Main container for detailed/expanded modes -->
+        <LinearLayout
+            android:id="@+id/mainContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp"
+            android:minWidth="140dp"
+            android:gravity="center_horizontal">
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Screen Time"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="#E0E0E0"
+                android:letterSpacing="0.2"
+                android:layout_marginBottom="4dp" />
+
+            <!-- Time -->
+            <TextView
+                android:id="@+id/timeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0h 00m"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:fontFamily="monospace"
+                android:shadowColor="#80000000"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2" />
+
+            <!-- Seconds -->
+            <TextView
+                android:id="@+id/timeSeconds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00s"
+                android:textSize="11sp"
+                android:textColor="#B0B0B0"
+                android:layout_marginTop="2dp" />
+
+            <!-- Date -->
+            <TextView
+                android:id="@+id/dateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tue, Jan 1"
+                android:textSize="11sp"
+                android:textColor="#B0B0B0"
+                android:layout_marginTop="6dp" />
+
+            <!-- Goal text -->
+            <TextView
+                android:id="@+id/goalText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Daily Goal: 2h 00m"
+                android:textSize="11sp"
+                android:textColor="#B0B0B0"
+                android:layout_marginTop="2dp" />
+
+            <!-- Progress container (hidden/visible controlled in code) -->
+            <LinearLayout
+                android:id="@+id/progressContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="8dp">
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:max="100"
+                    android:progress="0" />
+            </LinearLayout>
+
+            <!-- Expanded section (shown in expanded mode) -->
+            <LinearLayout
+                android:id="@+id/expandedContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:visibility="gone">
+
+                <!-- Top apps list container -->
+                <LinearLayout
+                    android:id="@+id/topAppsContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Close button (top-right) -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/closeButton"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/button_close"
+                android:src="@drawable/ic_close"
+                android:scaleType="centerInside"
+                android:contentDescription="Close" />
+        </LinearLayout>
+    </FrameLayout>
+
+</androidx.cardview.widget.CardView>
