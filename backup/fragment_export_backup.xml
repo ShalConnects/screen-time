@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_primary"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Export & Data -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Export &amp; Data"
+            android:textSize="18sp"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"/>
+
+        <Button
+            android:id="@+id/exportDailyButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Export Today"
+            android:textSize="16sp"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/exportWeeklyButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Export Weekly Summary"
+            android:textSize="16sp"
+            android:padding="16dp"
+            android:layout_marginBottom="32dp"
+            android:textStyle="bold"/>
+
+        <!-- Feature Summary -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="💡 Quick Tips"
+            android:textSize="16sp"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="💡 Tap overlay to pause for 5 minutes\n💡 Drag to move, auto-snaps to edges\n📱 Per-app mode shows current app time\n🎯 Set daily limits for gentle nudges\n🔋 Battery optimization for reliability\n📊 Export weekly summaries\n📈 Session tracking and productivity scoring\n🧠 Usage pattern analysis and break recommendations\n📅 Weekly/monthly historical views\n🔔 Smart contextual reminders and break suggestions\n🎉 Limit celebrations and customizable alerts\n⚡ Performance monitoring and optimization\n🎯 Custom limits for weekdays/weekends\n📱 App categories and custom grouping\n🌍 Timezone support and auto-detection\n👤 Multiple profiles for work/personal use"
+            android:textSize="14sp"
+            android:textColor="@color/text_tertiary"
+            android:gravity="start"
+            android:lineSpacingExtra="4dp"/>
+
+    </LinearLayout>
+
+</ScrollView>

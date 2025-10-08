@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="#FF1A1A1A"
+    android:minWidth="320dp">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Battery Settings"
+            android:textSize="20sp"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            android:drawableStart="@drawable/ic_analytics"
+            android:drawablePadding="12dp"
+            android:drawableTint="@color/text_primary"/>
+
+        <Button
+            android:id="@+id/closeButton"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:text="×"
+            android:textSize="18sp"
+            android:textColor="@color/text_tertiary"
+            android:background="@drawable/button_glass"
+            android:padding="0dp"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <!-- Current Status -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/glass_background_compact"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Current Status"
+            android:textSize="16sp"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Battery Optimization"
+                    android:textSize="12sp"
+                    android:textColor="@color/text_tertiary"
+                    android:layout_marginBottom="4dp"/>
+
+                <TextView
+                    android:id="@+id/batteryStatusText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Checking..."
+                    android:textSize="14sp"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Auto-Start"
+                    android:textSize="12sp"
+                    android:textColor="@color/text_tertiary"
+                    android:layout_marginBottom="4dp"/>
+
+                <TextView
+                    android:id="@+id/autoStartStatusText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Checking..."
+                    android:textSize="14sp"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Instructions -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/glass_background_compact"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Instructions"
+            android:textSize="16sp"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp"/>
+
+        <TextView
+            android:id="@+id/instructionsText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Loading instructions..."
+            android:textSize="12sp"
+            android:textColor="@color/text_tertiary"
+            android:lineSpacingExtra="2dp"/>
+
+    </LinearLayout>
+
+    <!-- Action Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <Button
+            android:id="@+id/openBatterySettingsButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Battery Settings"
+            android:textSize="12sp"
+            android:textColor="#FFFFFF"
+            android:padding="12dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/button_glass"/>
+
+        <Button
+            android:id="@+id/openAutoStartButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Auto-Start"
+            android:textSize="12sp"
+            android:textColor="#FFFFFF"
+            android:padding="12dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/button_glass"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_primary"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+
+        <!-- Historical Views -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Historical Views"
+            android:textSize="18sp"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"/>
+
+        <Button
+            android:id="@+id/sessionStatsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Session Stats"
+            android:textSize="12sp"
+            android:textColor="#FFFFFF"
+            android:padding="8dp"
+            android:layout_marginBottom="8dp"
+            android:maxLines="2"
+            android:ellipsize="none"
+            android:background="@drawable/button_glass"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <Button
+                android:id="@+id/weeklyViewButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Weekly View"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:padding="8dp"
+                android:layout_marginEnd="4dp"
+                android:maxLines="2"
+                android:ellipsize="none"
+                android:background="@drawable/button_glass"/>
+
+            <Button
+                android:id="@+id/monthlyViewButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Monthly View"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:padding="8dp"
+                android:layout_marginStart="4dp"
+                android:maxLines="2"
+                android:ellipsize="none"
+                android:background="@drawable/button_glass"/>
+
+        </LinearLayout>
+
+        <!-- Core Features -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Core Features"
+            android:textSize="18sp"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <Button
+                android:id="@+id/batteryOptimizationButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Battery Settings"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:padding="8dp"
+                android:layout_marginEnd="4dp"
+                android:maxLines="2"
+                android:ellipsize="none"
+                android:background="@drawable/button_glass"/>
+
+            <Button
+                android:id="@+id/accessibilityButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Accessibility"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:padding="8dp"
+                android:layout_marginStart="4dp"
+                android:maxLines="2"
+                android:ellipsize="none"
+                android:background="@drawable/button_glass"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/appFilterButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="App Filters"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"
+            android:maxLines="2"
+            android:ellipsize="none"
+            android:background="@drawable/button_glass"/>
+
+    </LinearLayout>
+
+</ScrollView>

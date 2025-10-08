@@ -3,16 +3,23 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+import java.util.Properties
+import java.io.FileInputStream
+
 android {
     namespace 'com.example.screentimeoverlay'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.screentimeoverlay"
+        applicationId "com.screentime.overlay"
         minSdk 26
         targetSdk 34
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
+        
+        // Add proper app name and description
+        resValue "string", "app_name", "Screen Time Tracker"
+        resValue "string", "app_description", "Track your screen time with beautiful overlays and detailed analytics"
     }
 
     compileOptions {
@@ -24,10 +31,26 @@ android {
         jvmTarget = '1.8'
     }
 
+    signingConfigs {
+        release {
+            def keystorePropertiesFile = rootProject.file("app/keystore.properties")
+            def keystoreProperties = new Properties()
+            if (keystorePropertiesFile.exists()) {
+                keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+            }
+        }
+    }
+    
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }

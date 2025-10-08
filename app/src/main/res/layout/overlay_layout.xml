@@ -4,7 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:elevation="14dp"
-    app:cardCornerRadius="24dp"
+    app:cardCornerRadius="8dp"
     app:cardBackgroundColor="#00000000">
 
     <FrameLayout
@@ -39,7 +39,6 @@
                 android:id="@+id/timeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0h 00m"
                 android:textSize="22sp"
                 android:textColor="@color/text_primary"
                 android:textStyle="bold"
@@ -50,12 +49,29 @@
                 android:shadowRadius="2"
                 android:layout_marginBottom="2dp"/>
 
+            <!-- Reminder Message Display -->
+            <TextView
+                android:id="@+id/reminderText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:textAlignment="center"
+                android:visibility="gone"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/reminder_background"
+                android:padding="8dp"
+                android:shadowColor="#80000000"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="4"
+                android:fontFamily="sans-serif-medium"/>
+
             <!-- Seconds Display -->
             <TextView
                 android:id="@+id/timeSeconds"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="00s"
                 android:textSize="11sp"
                 android:textColor="#B0B0B0"
                 android:layout_marginBottom="4dp"/>
@@ -65,7 +81,6 @@
                 android:id="@+id/dateText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Jan 1"
                 android:textSize="10sp"
                 android:textColor="#A0A0A0"
                 android:layout_marginBottom="6dp"/>
@@ -75,7 +90,6 @@
                 android:id="@+id/goalText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Goal: 8h 0m"
                 android:textSize="9sp"
                 android:textColor="@color/text_tertiary"
                 android:layout_marginBottom="8dp"/>
@@ -123,7 +137,6 @@
                 android:id="@+id/timeTextExpanded"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0h 00m"
                 android:textSize="24sp"
                 android:textColor="@color/text_primary"
                 android:textStyle="bold"
@@ -134,12 +147,22 @@
                 android:shadowRadius="2"
                 android:layout_marginBottom="4dp"/>
 
+            <!-- Reminder Message Display -->
+            <TextView
+                android:id="@+id/reminderTextExpanded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:textColor="#FFFFFF"
+                android:textAlignment="center"
+                android:visibility="gone"
+                android:layout_marginBottom="4dp"/>
+
             <!-- Seconds Display -->
             <TextView
                 android:id="@+id/timeSecondsExpanded"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="00s"
                 android:textSize="12sp"
                 android:textColor="#B0B0B0"
                 android:layout_marginBottom="6dp"/>
@@ -149,7 +172,6 @@
                 android:id="@+id/dateTextExpanded"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Jan 1"
                 android:textSize="10sp"
                 android:textColor="#A0A0A0"
                 android:layout_marginBottom="8dp"/>
@@ -159,7 +181,6 @@
                 android:id="@+id/goalTextExpanded"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Goal: 8h 0m"
                 android:textSize="10sp"
                 android:textColor="@color/text_tertiary"
                 android:layout_marginBottom="12dp"/>

@@ -10,13 +10,13 @@
         <!-- Compact Content -->
         <LinearLayout
             android:id="@+id/compactContainer"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="12dp"
-            android:background="@null"
+            android:padding="8dp"
+            android:background="@drawable/glass_background"
             android:gravity="center"
-            android:minWidth="100dp">
+            android:minWidth="120dp">
 
             <!-- Title -->
             <TextView
@@ -35,7 +35,6 @@
                 android:id="@+id/timeTextCompact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0h 00m"
                 android:textSize="18sp"
                 android:textColor="@color/text_primary"
                 android:textStyle="bold"
@@ -45,39 +44,28 @@
                 android:shadowDy="1"
                 android:shadowRadius="2"/>
 
+            <!-- Reminder Message Display -->
+            <TextView
+                android:id="@+id/reminderTextCompact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="8sp"
+                android:textColor="#FFFFFF"
+                android:textAlignment="center"
+                android:visibility="gone"
+                android:layout_marginTop="2dp"/>
+
             <!-- Seconds Display -->
             <TextView
                 android:id="@+id/timeSecondsCompact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="00s"
                 android:textSize="10sp"
                 android:textColor="#B0B0B0"
                 android:layout_marginTop="2dp"/>
 
         </LinearLayout>
 
-        <!-- Action Buttons -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="top|end"
-            android:layout_marginTop="6dp"
-            android:layout_marginEnd="6dp"
-            android:gravity="center">
-
-            <!-- Close Button -->
-            <ImageButton
-                android:id="@+id/closeButtonCompact"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="@drawable/button_close"
-                android:src="@drawable/ic_close"
-                android:scaleType="centerInside"
-                android:contentDescription="Close"/>
-
-        </LinearLayout>
 
     </FrameLayout>
 

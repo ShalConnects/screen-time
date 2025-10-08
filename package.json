@@ -1,0 +1,30 @@
+{
+  "name": "screen-time-tracker-landing",
+  "version": "1.0.0",
+  "description": "Landing page for Screen Time Tracker Android app",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Static site - no build step required'",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "screen-time",
+    "digital-wellness",
+    "android-app",
+    "productivity",
+    "analytics"
+  ],
+  "author": "Salauddin Kader <salauddin.kader406@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/salauddin-kader/screen-time-tracker-landing"
+  },
+  "devDependencies": {
+    "vercel": "^32.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

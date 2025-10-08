@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Backup of Per-App Mode UI elements from fragment_monitor.xml -->
+<!-- Lines 60-82: Per-App Mode Switch -->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="16dp"
+    android:background="@drawable/glass_background"
+    android:layout_marginBottom="8dp">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Per-App Mode"
+        android:textColor="@color/text_primary"
+        android:textSize="16sp"/>
+
+    <Switch
+        android:id="@+id/perAppSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

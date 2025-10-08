@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tooltip with tail pointing RIGHT (for when overlay is on right side) -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Main tooltip bubble -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#CC000000"/>
+            <corners android:radius="12dp"/>
+        </shape>
+    </item>
+    
+    <!-- Tail pointing right -->
+    <item
+        android:right="0dp"
+        android:top="20dp"
+        android:width="10dp"
+        android:height="10dp">
+        <rotate
+            android:fromDegrees="45"
+            android:pivotX="50%"
+            android:pivotY="50%">
+            <shape android:shape="rectangle">
+                <solid android:color="#CC000000"/>
+            </shape>
+        </rotate>
+    </item>
+    
+</layer-list>
+

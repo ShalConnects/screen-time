@@ -39,7 +39,7 @@
     <!-- Glassmorphism Card Style -->
     <style name="GlassCard" parent="Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/glass_primary</item>
-        <item name="cardCornerRadius">24dp</item>
+        <item name="cardCornerRadius">8dp</item>
         <item name="cardElevation">8dp</item>
         <item name="android:background">@drawable/glass_background</item>
     </style>

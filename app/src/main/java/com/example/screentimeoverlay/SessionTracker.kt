@@ -27,7 +27,7 @@ class SessionTracker(private val context: Context) {
     fun startSession(packageName: String, appName: String) {
         val currentTime = System.currentTimeMillis()
         
-        // If we have an active session, end it first
+        // If we have an active session, end it first if it's been inactive too long
         currentSession?.let { session ->
             if (currentTime - session.lastActivityTime > breakThresholdMs) {
                 endCurrentSession()
@@ -57,6 +57,9 @@ class SessionTracker(private val context: Context) {
                     session.appName = appName
                     session.lastActivityTime = currentTime
                     Log.d(TAG, "Updated session to $appName")
+                } else {
+                    // Same app, just update activity time
+                    session.lastActivityTime = currentTime
                 }
             }
         }
@@ -161,6 +164,88 @@ class SessionTracker(private val context: Context) {
             longestSession = longestSession,
             focusScore = focusScore,
             focusedSessions = focusedSessions
+        )
+    }
+    
+    /**
+     * Get session statistics for a date range
+     */
+    fun getSessionStatsForRange(startDate: Date, endDate: Date): SessionStats {
+        val sessions = getSessionsForDateRange(startDate, endDate)
+        
+        val totalSessions = sessions.size
+        val totalTime = sessions.sumOf { it.totalTime }
+        val averageSessionTime = if (totalSessions > 0) totalTime / totalSessions else 0L
+        val longestSession = sessions.maxByOrNull { it.totalTime }?.totalTime ?: 0L
+        
+        // Calculate focus score (sessions longer than 15 minutes are considered focused)
+        val focusedSessions = sessions.count { it.totalTime >= TimeUnit.MINUTES.toMillis(15) }
+        val focusScore = if (totalSessions > 0) (focusedSessions * 100) / totalSessions else 0
+        
+        return SessionStats(
+            date = startDate,
+            totalSessions = totalSessions,
+            totalTime = totalTime,
+            averageSessionTime = averageSessionTime,
+            longestSession = longestSession,
+            focusScore = focusScore,
+            focusedSessions = focusedSessions
+        )
+    }
+    
+    /**
+     * Get session insights for better analytics
+     */
+    fun getSessionInsights(date: Date): SessionInsights {
+        val sessions = getSessionsForDate(date)
+        
+        if (sessions.isEmpty()) {
+            return SessionInsights(
+                firstSessionTime = null,
+                lastSessionTime = null,
+                averageBreakTime = 0L,
+                mostUsedApp = null,
+                sessionPattern = "No sessions recorded"
+            )
+        }
+        
+        val sortedSessions = sessions.sortedBy { it.startTime }
+        val firstSession = sortedSessions.first()
+        val lastSession = sortedSessions.last()
+        
+        // Calculate average break time
+        var totalBreakTime = 0L
+        var breakCount = 0
+        
+        for (i in 1 until sortedSessions.size) {
+            val breakTime = sortedSessions[i].startTime - sortedSessions[i-1].endTime
+            if (breakTime > 0) {
+                totalBreakTime += breakTime
+                breakCount++
+            }
+        }
+        
+        val averageBreakTime = if (breakCount > 0) totalBreakTime / breakCount else 0L
+        
+        // Find most used app
+        val appUsage = sessions.groupBy { it.appName }
+            .mapValues { it.value.sumOf { session -> session.totalTime } }
+        val mostUsedApp = appUsage.maxByOrNull { it.value }?.key
+        
+        // Determine session pattern
+        val sessionPattern = when {
+            sessions.size >= 10 -> "High activity day"
+            sessions.size >= 5 -> "Moderate activity day"
+            sessions.size >= 2 -> "Light activity day"
+            else -> "Minimal activity day"
+        }
+        
+        return SessionInsights(
+            firstSessionTime = firstSession.startTime,
+            lastSessionTime = lastSession.startTime,
+            averageBreakTime = averageBreakTime,
+            mostUsedApp = mostUsedApp,
+            sessionPattern = sessionPattern
         )
     }
     
@@ -309,5 +394,13 @@ data class AppSessionSummary(
     var sessionCount: Int,
     var totalTime: Long,
     var averageSessionTime: Long
+)
+
+data class SessionInsights(
+    val firstSessionTime: Long?,
+    val lastSessionTime: Long?,
+    val averageBreakTime: Long,
+    val mostUsedApp: String?,
+    val sessionPattern: String
 )
 

@@ -55,11 +55,6 @@
                 android:resource="@xml/accessibility_service_config" />
         </service>
 
-        <!-- Smart notification scheduler -->
-        <service
-            android:name=".SmartNotificationScheduler"
-            android:exported="false"
-            android:enabled="true" />
 
     </application>
 

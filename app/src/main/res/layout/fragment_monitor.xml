@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_primary"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Core Controls -->
+        <Button
+            android:id="@+id/toggleOverlayButton"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:text="START OVERLAY"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:letterSpacing="0.1"
+            android:padding="20dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/button_glass_start"
+            android:elevation="16dp"
+            android:stateListAnimator="@null"
+            android:fontFamily="sans-serif-medium"
+            android:drawableStart="@drawable/ic_play_animated"
+            android:drawablePadding="12dp"
+            android:gravity="center"
+            android:drawableTint="#FFFFFF"/>
+
+        <!-- Position Settings -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <Button
+                android:id="@+id/autoPositionButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Auto"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:padding="8dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/button_glass"/>
+
+            <Button
+                android:id="@+id/topRightPositionButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Top Right"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:padding="8dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/button_glass"/>
+
+            <Button
+                android:id="@+id/bottomRightPositionButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Bottom Right"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:padding="8dp"
+                android:layout_marginStart="4dp"
+                android:background="@drawable/button_glass"/>
+
+        </LinearLayout>
+
+        <!-- Basic Settings - Side by Side -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <!-- Touch Passthrough - Left Half -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:background="@drawable/glass_background"
+                android:layout_marginEnd="4dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Touch Passthrough"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"/>
+
+                <Switch
+                    android:id="@+id/touchPassthroughSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <!-- Auto-Hide Mode - Right Half -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:background="@drawable/glass_background"
+                android:layout_marginStart="4dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Auto-Hide Mode"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"/>
+
+                <Switch
+                    android:id="@+id/autoHideSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Per-App Mode - HIDDEN (backed up in backup/per_app_mode_ui_backup.xml) -->
+        <!--
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:background="@drawable/glass_background"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Per-App Mode"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp"/>
+
+            <Switch
+                android:id="@+id/perAppSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+        -->
+
+        <!-- Modern Daily Goal Setting -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:background="@drawable/glass_background"
+            android:layout_marginBottom="16dp">
+
+            <!-- Goal Header with Smart Status -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Daily Limit"
+                    android:textColor="@color/text_primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/goalStatusText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="8h 0m"
+                    android:textColor="#4CAF50"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:background="@drawable/glass_background"
+                    android:padding="8dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"/>
+
+            </LinearLayout>
+
+            <!-- Interactive Time Sliders -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="16dp">
+
+                <!-- Hours Slider -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hours"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"
+                        android:layout_marginEnd="12dp"
+                        android:minWidth="50dp"/>
+
+                    <SeekBar
+                        android:id="@+id/goalHoursSlider"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:max="24"
+                        android:progress="8"
+                        android:progressTint="#4CAF50"
+                        android:thumbTint="#4CAF50"
+                        android:layout_marginEnd="12dp"/>
+
+                    <TextView
+                        android:id="@+id/goalHoursValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="8"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:minWidth="30dp"
+                        android:gravity="center"/>
+
+                </LinearLayout>
+
+                <!-- Minutes Slider -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Minutes"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"
+                        android:layout_marginEnd="12dp"
+                        android:minWidth="50dp"/>
+
+                    <SeekBar
+                        android:id="@+id/goalMinutesSlider"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:max="59"
+                        android:progress="0"
+                        android:progressTint="#4CAF50"
+                        android:thumbTint="#4CAF50"
+                        android:layout_marginEnd="12dp"/>
+
+                    <TextView
+                        android:id="@+id/goalMinutesValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:minWidth="30dp"
+                        android:gravity="center"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Quick Preset Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <Button
+                    android:id="@+id/preset4hButton"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:text="4h"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/button_glass"
+                    android:layout_marginEnd="4dp"/>
+
+                <Button
+                    android:id="@+id/preset6hButton"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:text="6h"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/button_glass"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"/>
+
+                <Button
+                    android:id="@+id/preset8hButton"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:text="8h"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/button_glass"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"/>
+
+                <Button
+                    android:id="@+id/preset10hButton"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_weight="1"
+                    android:text="10h"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/button_glass"
+                    android:layout_marginStart="4dp"/>
+
+            </LinearLayout>
+
+
+            <!-- Action Button -->
+            <Button
+                android:id="@+id/setGoalButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="SET LIMIT"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/button_glass_start"/>
+
+            <!-- Reminder Settings -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:padding="16dp"
+                android:background="@drawable/glass_background"
+                android:visibility="gone"
+                android:id="@+id/reminderSettingsContainer">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reminder Settings"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp"/>
+
+                <TextView
+                    android:id="@+id/reminderDescriptionText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Get 3 gentle reminders at 33%, 66%, and 100% of your limit"
+                    android:textSize="12sp"
+                    android:textColor="@color/text_tertiary"
+                    android:layout_marginBottom="16dp"/>
+
+                <!-- Tone Selection -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reminder Tone:"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="8dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+
+                    <Button
+                        android:id="@+id/toneHumorButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:text="😄"
+                        android:textSize="16sp"
+                        android:background="@drawable/button_glass"
+                        android:layout_marginEnd="4dp"/>
+
+                    <Button
+                        android:id="@+id/toneRudeButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:text="😠"
+                        android:textSize="16sp"
+                        android:background="@drawable/button_glass"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"/>
+
+                    <Button
+                        android:id="@+id/toneVeryRudeButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:text="💀"
+                        android:textSize="16sp"
+                        android:background="@drawable/button_glass"
+                        android:layout_marginStart="4dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp">
+
+                    <Button
+                        android:id="@+id/toneMotivateButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:text="💪"
+                        android:textSize="16sp"
+                        android:background="@drawable/button_glass"
+                        android:layout_marginEnd="4dp"/>
+
+                    <Button
+                        android:id="@+id/toneFriendlyButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:text="😊"
+                        android:textSize="16sp"
+                        android:background="@drawable/button_glass"
+                        android:layout_marginStart="4dp"/>
+
+                </LinearLayout>
+
+                <!-- Current Selection -->
+                <TextView
+                    android:id="@+id/currentToneText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Selected: Friendly 😊"
+                    android:textSize="12sp"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"
+                    android:background="@drawable/glass_background"
+                    android:padding="8dp"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+            <!-- Enable Reminders Toggle -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:background="@drawable/glass_background"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Enable Reminders"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"/>
+
+                <Switch
+                    android:id="@+id/enableRemindersSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

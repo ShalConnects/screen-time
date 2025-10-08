@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    
+    <!-- Pulsing red gradient with glass effect -->
+    <gradient
+        android:type="radial"
+        android:centerX="0.5"
+        android:centerY="0.5"
+        android:startColor="#60FF6B6B"
+        android:centerColor="#40FF6B6B"
+        android:endColor="#20FF6B6B" />
+    
+    <!-- Rounded corners for modern look -->
+    <corners android:radius="16dp" />
+    
+    <!-- Red border with glow effect -->
+    <stroke
+        android:width="2dp"
+        android:color="#80FF6B6B" />
+        
+</shape>

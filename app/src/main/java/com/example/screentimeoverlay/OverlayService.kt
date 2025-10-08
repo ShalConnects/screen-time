@@ -45,6 +45,7 @@ class OverlayService : Service() {
     private lateinit var progressBar: android.widget.ProgressBar
     private lateinit var goalTextView: TextView
     private lateinit var titleTextView: TextView
+    private lateinit var reminderTextView: TextView
     private lateinit var mainContainer: LinearLayout
     private lateinit var expandedContainer: LinearLayout
     private lateinit var topAppsContainer: LinearLayout
@@ -68,7 +69,8 @@ class OverlayService : Service() {
     private var touchPassthrough = false
     
     // Smart features
-    private var showPerApp = false
+    // Per-App Mode - HIDDEN (backed up in backup/per_app_mode_logic_backup.kt)
+    // private var showPerApp = false
     private var dailyGoal = DailyGoal(8, 0) // 8 hours default
     private var lastNudgeTime = 0L
     private val appPackageManager: PackageManager by lazy { packageManager }
@@ -76,13 +78,14 @@ class OverlayService : Service() {
     // UI state
     private var isExpanded = false
     private var currentDate = ""
-    private var currentDisplayMode = DisplayMode.DETAILED
+    private var currentDisplayMode = DisplayMode.COMPACT
     private var currentPositionMode = PositionMode.AUTO
     private lateinit var smartPositioningManager: SmartPositioningManager
     
     // Auto-hide mode
     private var autoHideEnabled = false
     private var autoHideTimer: Runnable? = null
+    private var reminderDismissRunnable: Runnable? = null
     private var lastScreenTimeText = ""
     private var isCurrentlyVisible = true
     private val autoHideDelay = 3000L // 3 seconds
@@ -109,6 +112,11 @@ class OverlayService : Service() {
     
     // Smart theming and visual enhancements
     private lateinit var smartThemingManager: SmartThemingManager
+    
+    // Limit portion reminder system
+    private lateinit var limitPortionManager: LimitPortionManager
+    private lateinit var reminderToneManager: ReminderToneManager
+    private val shownReminders = mutableSetOf<Int>() // Track which portions have shown reminders
 
     override fun onCreate() {
         super.onCreate()
@@ -137,6 +145,10 @@ class OverlayService : Service() {
         
         // Initialize smart theming manager
         smartThemingManager = SmartThemingManager(this)
+        
+        // Initialize limit portion reminder system
+        limitPortionManager = LimitPortionManager()
+        reminderToneManager = ReminderToneManager(this)
         
         // Initialize performance monitoring
         performanceOptimizer.initialize()
@@ -188,10 +200,14 @@ class OverlayService : Service() {
             return
         }
 
+        // Initial update to populate real data
+        updateScreenTime()
+        
         startUpdating()
     }
 
     private fun startUpdating() {
+        // Start the main screen time update loop
         handler.post(object : Runnable {
             override fun run() {
                 // Check if we should skip this update for performance
@@ -206,6 +222,14 @@ class OverlayService : Service() {
                 // Use adaptive update interval
                 val optimalInterval = adaptiveUpdateManager.getOptimalUpdateInterval()
                 handler.postDelayed(this, optimalInterval)
+            }
+        })
+        
+        // Start the seconds counter update loop (updates every second)
+        handler.post(object : Runnable {
+            override fun run() {
+                updateSecondsCounter()
+                handler.postDelayed(this, 1000) // Update every second
             }
         })
     }
@@ -234,12 +258,16 @@ class OverlayService : Service() {
         }
         sessionTracker.updateSession()
         
+        // Per-App Mode - HIDDEN (backed up in backup/per_app_mode_logic_backup.kt)
+        /*
         val newText = if (showPerApp && screenTimeData.currentApp != null) {
             val currentAppUsage = screenTimeData.topApps.find { it.packageName == screenTimeData.currentApp }
             currentAppUsage?.getFormattedTime() ?: screenTimeData.getFormattedTime()
         } else {
             screenTimeData.getFormattedTime()
         }
+        */
+        val newText = screenTimeData.getFormattedTime()
 
         val hasSignificantChange = timeTextView.text != newText
         if (hasSignificantChange) {
@@ -252,12 +280,6 @@ class OverlayService : Service() {
             }
         }
 
-        // Update seconds counter every tick - use current time seconds
-        val currentTime = System.currentTimeMillis()
-        val secs = TimeUnit.MILLISECONDS.toSeconds(currentTime) % 60
-        if (::timeSecondsTextView.isInitialized) {
-            timeSecondsTextView.text = String.format("%02ds", secs)
-        }
         
         // Record update for adaptive analysis
         adaptiveUpdateManager.recordUpdate(hasSignificantChange)
@@ -281,16 +303,40 @@ class OverlayService : Service() {
         updatePerformanceMetrics()
     }
 
+    private fun updateSecondsCounter() {
+        // Update seconds counter every second - use current time seconds
+        val currentTime = System.currentTimeMillis()
+        val secs = TimeUnit.MILLISECONDS.toSeconds(currentTime) % 60
+        if (::timeSecondsTextView.isInitialized && currentDisplayMode != DisplayMode.PROGRESS) {
+            timeSecondsTextView.text = String.format("%02ds", secs)
+        }
+    }
+
     private fun getScreenTimeData(): ScreenTimeData {
         val usageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
         val endTime = System.currentTimeMillis()
-        val startTime = endTime - TimeUnit.DAYS.toMillis(1)
+        
+        // Calculate start time as midnight (00:01 AM) of current day in user's timezone
+        // This ensures usage resets daily at 00:01 AM based on user's local timezone
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 1) // 00:01 AM
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+        val startTime = calendar.timeInMillis
 
         val usageStats = usageStatsManager.queryUsageStats(
             UsageStatsManager.INTERVAL_DAILY,
             startTime,
             endTime
         ) ?: return ScreenTimeData(0, emptyList())
+        
+        // Debug logging for filter investigation
+        android.util.Log.d("ScreenTimeDebug", "Filter Mode: ${appFilterManager.getFilterMode()}")
+        android.util.Log.d("ScreenTimeDebug", "Total usage stats returned: ${usageStats.size}")
+        android.util.Log.d("ScreenTimeDebug", "Whitelist size: ${appFilterManager.getWhitelist().size}")
+        android.util.Log.d("ScreenTimeDebug", "Blacklist size: ${appFilterManager.getBlacklist().size}")
+        android.util.Log.d("ScreenTimeDebug", "Excluded categories: ${appFilterManager.getExcludedCategories()}")
 
         var totalTime = 0L
         val appUsages = mutableListOf<AppUsage>()
@@ -302,12 +348,40 @@ class OverlayService : Service() {
                 if (stats.totalTimeInForeground > 0) {
                     val appName = getAppName(stats.packageName)
                     appUsages.add(AppUsage(stats.packageName, appName, stats.totalTimeInForeground))
+                    
+                    // Debug logging to investigate discrepancy
+                    val hours = stats.totalTimeInForeground / (1000 * 60 * 60)
+                    val minutes = (stats.totalTimeInForeground % (1000 * 60 * 60)) / (1000 * 60)
+                    android.util.Log.d("ScreenTimeDebug", "App: $appName ($stats.packageName) - Time: ${hours}h ${minutes}m")
+                }
+            } else {
+                // Log filtered out apps for investigation
+                if (stats.totalTimeInForeground > 0) {
+                    val appName = getAppName(stats.packageName)
+                    val hours = stats.totalTimeInForeground / (1000 * 60 * 60)
+                    val minutes = (stats.totalTimeInForeground % (1000 * 60 * 60)) / (1000 * 60)
+                    android.util.Log.d("ScreenTimeDebug", "FILTERED OUT: $appName ($stats.packageName) - Time: ${hours}h ${minutes}m")
                 }
             }
         }
+        
+        // Log total calculated time
+        val totalHours = totalTime / (1000 * 60 * 60)
+        val totalMinutes = (totalTime % (1000 * 60 * 60)) / (1000 * 60)
+        android.util.Log.d("ScreenTimeDebug", "TOTAL CALCULATED TIME: ${totalHours}h ${totalMinutes}m")
+        android.util.Log.d("ScreenTimeDebug", "Total apps tracked: ${appUsages.size}")
+        android.util.Log.d("ScreenTimeDebug", "Time range: ${java.text.SimpleDateFormat("HH:mm", java.util.Locale.getDefault()).format(java.util.Date(startTime))} to ${java.text.SimpleDateFormat("HH:mm", java.util.Locale.getDefault()).format(java.util.Date(endTime))}")
 
         // Sort by usage time and get top 5
         val topApps = appUsages.sortedByDescending { it.timeInForeground }.take(5)
+        
+        // Debug logging for top apps investigation
+        android.util.Log.d("ScreenTimeDebug", "TOP 10 APPS BY USAGE:")
+        appUsages.sortedByDescending { it.timeInForeground }.take(10).forEachIndexed { index, app ->
+            val hours = app.timeInForeground / (1000 * 60 * 60)
+            val minutes = (app.timeInForeground % (1000 * 60 * 60)) / (1000 * 60)
+            android.util.Log.d("ScreenTimeDebug", "${index + 1}. ${app.appName} (${app.packageName}) - ${hours}h ${minutes}m")
+        }
         
         // Get current app (prefer accessibility service, fallback to usage stats)
         val currentApp = currentAppFromAccessibility ?: usageStats.maxByOrNull { it.lastTimeUsed }?.packageName
@@ -321,6 +395,16 @@ class OverlayService : Service() {
     }
 
     private fun checkDailyGoal(totalTime: Long) {
+        // Check for portion reminders (3 reminders throughout the day) - only if enabled
+        if (reminderToneManager.areRemindersEnabled()) {
+            val portionToRemind = limitPortionManager.shouldShowReminder(totalTime, dailyGoal, shownReminders)
+            if (portionToRemind != null) {
+                showPortionReminder(portionToRemind, totalTime)
+                shownReminders.add(portionToRemind)
+            }
+        }
+        
+        // Original goal exceeded logic
         if (dailyGoal.isExceeded(totalTime)) {
             val currentTime = System.currentTimeMillis()
             // Show nudge only once every 30 minutes
@@ -328,6 +412,113 @@ class OverlayService : Service() {
                 showGoalNudge()
                 lastNudgeTime = currentTime
             }
+        }
+    }
+    
+    private fun showPortionReminder(portionNumber: Int, totalTime: Long) {
+        // Prevent overlapping reminders
+        if (::reminderTextView.isInitialized && reminderTextView.visibility == View.VISIBLE) {
+            return
+        }
+        
+        // Get remaining time
+        val remainingMinutes = limitPortionManager.getRemainingTime(totalTime, dailyGoal)
+        val remainingTimeText = limitPortionManager.formatRemainingTime(remainingMinutes)
+        
+        // Get current tone
+        val tone = reminderToneManager.getSelectedTone()
+        
+        // Get message based on tone and portion
+        val message = reminderToneManager.getReminderMessage(tone, portionNumber, remainingTimeText)
+        
+        // Show message directly in overlay
+        showOverlayMessage(message)
+    }
+    
+    private fun showOverlayMessage(message: String) {
+        // Skip if reminder TextView is not available (e.g., in progress mode)
+        if (!::reminderTextView.isInitialized) return
+        
+        // Cancel any existing reminder animation
+        reminderDismissRunnable?.let { handler.removeCallbacks(it) }
+        reminderTextView.clearAnimation()
+        
+        // Set reminder message
+        reminderTextView.text = message
+        reminderTextView.visibility = View.VISIBLE
+        
+        // Enhanced fade in with scale animation
+        reminderTextView.alpha = 0f
+        reminderTextView.scaleX = 0.8f
+        reminderTextView.scaleY = 0.8f
+        
+        reminderTextView.animate()
+            .alpha(1f)
+            .scaleX(1f)
+            .scaleY(1f)
+            .setDuration(300)
+            .setInterpolator(android.view.animation.DecelerateInterpolator())
+            .start()
+        
+        // Subtle overlay animation to accommodate the reminder
+        if (currentDisplayMode == DisplayMode.COMPACT) {
+            val compactContainer = overlayView.findViewById<LinearLayout>(R.id.compactContainer)
+            compactContainer?.animate()
+                ?.scaleX(1.05f)
+                ?.scaleY(1.05f)
+                ?.setDuration(200)
+                ?.setInterpolator(android.view.animation.DecelerateInterpolator())
+                ?.start()
+        }
+        
+        // Auto-dismiss after 6 seconds with improved timing
+        reminderDismissRunnable = Runnable {
+            dismissReminderMessage()
+        }
+        handler.postDelayed(reminderDismissRunnable!!, 6000)
+    }
+    
+    private fun dismissReminderMessage() {
+        if (!::reminderTextView.isInitialized) return
+        
+        // Enhanced fade out with scale animation
+        reminderTextView.animate()
+            .alpha(0f)
+            .scaleX(0.9f)
+            .scaleY(0.9f)
+            .setDuration(250)
+            .setInterpolator(android.view.animation.AccelerateInterpolator())
+            .withEndAction {
+                reminderTextView.visibility = View.GONE
+                reminderTextView.scaleX = 1f
+                reminderTextView.scaleY = 1f
+                
+                // Animate overlay back to original size
+                animateOverlayToOriginalSize()
+            }
+            .start()
+    }
+    
+    private fun animateOverlayToOriginalSize() {
+        if (!::overlayView.isInitialized) return
+        
+        // For compact mode, we need to ensure the container returns to its original size
+        if (currentDisplayMode == DisplayMode.COMPACT) {
+            val compactContainer = overlayView.findViewById<LinearLayout>(R.id.compactContainer)
+            compactContainer?.animate()
+                ?.scaleX(1f)
+                ?.scaleY(1f)
+                ?.setDuration(300)
+                ?.setInterpolator(android.view.animation.DecelerateInterpolator())
+                ?.start()
+        } else {
+            // For other modes, animate the main overlay
+            overlayView.animate()
+                .scaleX(1f)
+                .scaleY(1f)
+                .setDuration(300)
+                .setInterpolator(android.view.animation.DecelerateInterpolator())
+                .start()
         }
     }
 
@@ -389,7 +580,7 @@ class OverlayService : Service() {
                     val deltaX = (event.rawX - initialTouchX).toInt()
                     val deltaY = (event.rawY - initialTouchY).toInt()
                     
-                    if (abs(deltaX) > 10 || abs(deltaY) > 10) {
+                    if (abs(deltaX) > 5 || abs(deltaY) > 5) {
                         isDragging = true
                         params.x = initialX + deltaX
                         params.y = initialY + deltaY
@@ -400,8 +591,10 @@ class OverlayService : Service() {
                 MotionEvent.ACTION_UP -> {
                     if (isDragging) {
                         snapToEdge()
+                        true
+                    } else {
+                        false
                     }
-                    false
                 }
                 else -> false
             }
@@ -411,18 +604,43 @@ class OverlayService : Service() {
     private fun setupClickHandling() {
         timeTextView.setOnClickListener {
             if (!isDragging) {
-                pauseForMinutes(5)
+                openMainAppInterface()
             }
         }
         
-        closeButton.setOnClickListener {
-            stopSelf()
+        // Set up close button click listener only if close button exists
+        if (::closeButton.isInitialized) {
+            closeButton.setOnClickListener {
+                stopSelf()
+            }
         }
     }
     
     private fun setupModernInteractions() {
         // Update goal text
         updateGoalText()
+    }
+    
+    private fun openMainAppInterface() {
+        try {
+            val intent = Intent(this, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }
+            startActivity(intent)
+        } catch (e: Exception) {
+            // Fallback: try to open the app using package name
+            try {
+                val packageManager = getPackageManager()
+                val launchIntent = packageManager.getLaunchIntentForPackage(packageName)
+                if (launchIntent != null) {
+                    launchIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(launchIntent)
+                }
+            } catch (ex: Exception) {
+                // If all else fails, show a toast
+                Toast.makeText(this, "Unable to open main interface", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
     
     private fun toggleExpandedView() {
@@ -474,14 +692,24 @@ class OverlayService : Service() {
         val monthNames = arrayOf("Jan", "Feb", "Mar", "Apr", "May", "Jun",
                                 "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
         
-        currentDate = "${monthNames[month]} $day"
-        dateTextView.text = currentDate
+        val newDate = "${monthNames[month]} $day"
+        
+        // Check if date changed - reset portion reminders for new day
+        if (newDate != currentDate) {
+            shownReminders.clear()
+        }
+        
+        currentDate = newDate
+        if (::dateTextView.isInitialized) {
+            dateTextView.text = currentDate
+        }
     }
     
     private fun updateGoalText() {
         if (::goalTextView.isInitialized) {
             goalTextView.text = "Goal: ${dailyGoal.maxHours}h ${dailyGoal.maxMinutes}m"
         }
+        // For compact mode, goal text is not displayed, so we skip this update
     }
     
     private fun updateProgressBar(totalTime: Long) {
@@ -570,11 +798,13 @@ class OverlayService : Service() {
                 titleTextView = overlayView.findViewById(R.id.titleTextCompact)
                 timeTextView = overlayView.findViewById(R.id.timeTextCompact)
                 timeSecondsTextView = overlayView.findViewById(R.id.timeSecondsCompact)
-                closeButton = overlayView.findViewById(R.id.closeButtonCompact)
+                reminderTextView = overlayView.findViewById(R.id.reminderTextCompact)
+                // No close button in compact mode
             }
             DisplayMode.PROGRESS -> {
                 // Use progress layout elements
                 timeTextView = overlayView.findViewById(R.id.timeTextProgress)
+                // Progress mode doesn't have seconds display or reminder text
                 progressBar = overlayView.findViewById(R.id.progressBarMain)
                 goalTextView = overlayView.findViewById(R.id.goalTextProgress)
                 closeButton = overlayView.findViewById(R.id.closeButtonProgress)
@@ -585,6 +815,7 @@ class OverlayService : Service() {
                 timeSecondsTextView = overlayView.findViewById(R.id.timeSeconds)
                 dateTextView = overlayView.findViewById(R.id.dateText)
                 goalTextView = overlayView.findViewById(R.id.goalText)
+                reminderTextView = overlayView.findViewById(R.id.reminderText)
                 // Progress bar exists in detailed layout (hidden by default)
                 progressBar = overlayView.findViewById(R.id.progressBar)
                 mainContainer = overlayView.findViewById(R.id.mainContainer)
@@ -676,30 +907,28 @@ class OverlayService : Service() {
     }
     
     private fun snapToEdge() {
-        if (currentPositionMode == PositionMode.AUTO) {
-            // Use smart positioning
-            val optimalPosition = smartPositioningManager.getSnapPosition(
-                params.x, params.y, overlayView.width, overlayView.height
-            )
-            params.x = optimalPosition.x
-            params.y = optimalPosition.y
-            params.gravity = optimalPosition.gravity
-            windowManager.updateViewLayout(overlayView, params)
+        val displayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+        val screenWidth = displayMetrics.widthPixels
+        val screenHeight = displayMetrics.heightPixels
+        
+        // Calculate which side the user dragged to based on current position
+        val centerX = screenWidth / 2
+        val currentX = params.x
+        
+        // Determine target position based on where user actually dragged
+        val targetX = if (currentX < centerX) {
+            // User dragged to left side - snap to left
+            20
         } else {
-            // Use traditional edge snapping
-            val displayMetrics = DisplayMetrics()
-            windowManager.defaultDisplay.getMetrics(displayMetrics)
-            val screenWidth = displayMetrics.widthPixels
-            val screenHeight = displayMetrics.heightPixels
-            
-            val centerX = screenWidth / 2
-            val centerY = screenHeight / 2
-            
-            val targetX = if (params.x < centerX) 20 else screenWidth - overlayView.width - 20
-            val targetY = params.y.coerceIn(100, screenHeight - overlayView.height - 100)
-            
-            animateToPosition(targetX, targetY)
+            // User dragged to right side - snap to right
+            screenWidth - overlayView.width - 20
         }
+        
+        // Keep Y position within bounds but respect user's vertical position
+        val targetY = params.y.coerceIn(100, screenHeight - overlayView.height - 100)
+        
+        animateToPosition(targetX, targetY)
     }
     
     private fun animateToPosition(targetX: Int, targetY: Int) {
@@ -854,7 +1083,20 @@ class OverlayService : Service() {
         
         // Add floating particles for ambient effect
         if (smartThemingManager.getCurrentUsageStatus() == SmartThemingManager.UsageStatus.GOOD) {
-            smartThemingManager.addFloatingParticles(mainContainer)
+            when (currentDisplayMode) {
+                DisplayMode.DETAILED, DisplayMode.EXPANDED -> {
+                    if (::mainContainer.isInitialized) {
+                        smartThemingManager.addFloatingParticles(mainContainer)
+                    }
+                }
+                DisplayMode.COMPACT -> {
+                    val compactContainer = overlayView.findViewById<LinearLayout>(R.id.compactContainer)
+                    if (compactContainer != null) {
+                        smartThemingManager.addFloatingParticles(compactContainer)
+                    }
+                }
+                else -> {}
+            }
         }
         
         // Add pulse effect when approaching goals
@@ -879,11 +1121,14 @@ class OverlayService : Service() {
         windowManager.updateViewLayout(overlayView, params)
     }
 
+    // Per-App Mode - HIDDEN (backed up in backup/per_app_mode_logic_backup.kt)
+    /*
     fun togglePerAppMode() {
         showPerApp = !showPerApp
         // Force update on next cycle
         updateScreenTime()
     }
+    */
 
     fun setDailyGoal(hours: Int, minutes: Int) {
         dailyGoal = DailyGoal(hours, minutes, true)
@@ -1042,6 +1287,10 @@ class OverlayService : Service() {
         handler.removeCallbacksAndMessages(null)
         pauseHandler.removeCallbacksAndMessages(null)
         
+        // Cleanup reminder system
+        reminderDismissRunnable?.let { handler.removeCallbacks(it) }
+        reminderDismissRunnable = null
+        
         // Cleanup performance managers
         performanceOptimizer.cleanup()
         adaptiveUpdateManager.cleanup()
@@ -1074,12 +1323,15 @@ class OverlayService : Service() {
                     toggleTouchPassthrough()
                 }
             }
+            // Per-App Mode - HIDDEN (backed up in backup/per_app_mode_logic_backup.kt)
+            /*
             "toggle_per_app_mode" -> {
                 val enabled = intent.getBooleanExtra("enabled", false)
                 if (enabled) {
                     togglePerAppMode()
                 }
             }
+            */
             "set_daily_goal" -> {
                 val hours = intent.getIntExtra("hours", 8)
                 val minutes = intent.getIntExtra("minutes", 0)
@@ -1089,11 +1341,12 @@ class OverlayService : Service() {
                 val modeName = intent.getStringExtra("mode")
                 val mode = when (modeName) {
                     "COMPACT" -> DisplayMode.COMPACT
-                    // Progress mode removed: treat as DETAILED
-                    "PROGRESS" -> DisplayMode.DETAILED
-                    "DETAILED" -> DisplayMode.DETAILED
-                    "EXPANDED" -> DisplayMode.EXPANDED
-                    else -> DisplayMode.DETAILED
+                    // Progress mode removed: treat as COMPACT
+                    "PROGRESS" -> DisplayMode.COMPACT
+                    // Detailed mode disabled: fallback to COMPACT
+                    "DETAILED" -> DisplayMode.COMPACT
+                    "EXPANDED" -> DisplayMode.COMPACT
+                    else -> DisplayMode.COMPACT
                 }
                 switchDisplayMode(mode)
             }
