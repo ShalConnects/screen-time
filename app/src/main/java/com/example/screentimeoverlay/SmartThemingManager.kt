@@ -196,12 +196,49 @@ class SmartThemingManager(private val context: Context) {
         // Add subtle animations
         animateThemeTransition(mainContainer)
     }
+
+    /**
+     * Apply a subtle red-accent state when usage is exceeded, without altering other behavior.
+     */
+    fun applyExceededAccent(
+        container: LinearLayout,
+        timeTextView: TextView,
+        dateTextView: TextView?,
+        progressBar: android.widget.ProgressBar?,
+        goalTextView: TextView?
+    ) {
+        try {
+            // Semi-transparent red overlay tint for background (~40% opacity)
+            val bg = container.background
+            bg?.mutate()?.setTint(Color.parseColor("#66FF3B30"))
+            // Emphasize primary/goal text in red for clarity
+            timeTextView.setTextColor(Color.parseColor("#FFFF3B30"))
+            goalTextView?.setTextColor(Color.parseColor("#FFFF3B30"))
+        } catch (_: Throwable) {
+            // No-op if tinting fails
+        }
+    }
+
+    /** Clear exceeded accent so normal theming shows again. */
+    fun clearExceededAccent(container: LinearLayout) {
+        try {
+            val bg = container.background
+            bg?.mutate()?.setTintList(null)
+        } catch (_: Throwable) {}
+    }
     
     /**
      * Add floating particle effects for ambient animation
      */
     fun addFloatingParticles(container: LinearLayout) {
+        // Check if particles already exist to prevent accumulation
+        val existingParticleContainer = container.findViewById<LinearLayout>(R.id.particleContainer)
+        if (existingParticleContainer != null) {
+            return // Particles already exist, don't add more
+        }
+        
         val particleContainer = LinearLayout(context).apply {
+            id = R.id.particleContainer
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT
@@ -222,6 +259,22 @@ class SmartThemingManager(private val context: Context) {
         }
         
         container.addView(particleContainer)
+    }
+    
+    /**
+     * Remove floating particles from container
+     */
+    fun removeFloatingParticles(container: LinearLayout) {
+        val particleContainer = container.findViewById<LinearLayout>(R.id.particleContainer)
+        if (particleContainer != null) {
+            // Stop all animations before removing
+            particleContainer.clearAnimation()
+            for (i in 0 until particleContainer.childCount) {
+                val child = particleContainer.getChildAt(i)
+                child.clearAnimation()
+            }
+            container.removeView(particleContainer)
+        }
     }
     
     /**

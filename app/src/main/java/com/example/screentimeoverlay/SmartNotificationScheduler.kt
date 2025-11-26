@@ -1,5 +1,6 @@
 package com.example.screentimeoverlay
 
+import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
@@ -16,6 +17,7 @@ class SmartNotificationScheduler(private val context: Context) {
     private val notificationManager = NotificationManager(context)
     private val preferences = context.getSharedPreferences("notification_scheduler", Context.MODE_PRIVATE)
     private val handler = Handler(Looper.getMainLooper())
+    private val appFilterManager = AppFilterManager(context)
     
     // Tracking variables
     private var lastReminderTime = 0L
@@ -302,10 +304,14 @@ class SmartNotificationScheduler(private val context: Context) {
     ): List<GoalAchievement> {
         val achievements = mutableListOf<GoalAchievement>()
         
-        // Check daily limit goal
+        // Check daily limit goal - only celebrate if user is close to goal (within 5% or at goal) but hasn't exceeded
         val totalGoalMs = dailyGoal.getTotalMinutes() * 60 * 1000L
-        if (screenTimeData.totalTime <= totalGoalMs && screenTimeData.totalTime > 0) {
-            achievements.add(GoalAchievement(GoalType.DAILY_LIMIT, "Daily limit maintained"))
+        if (totalGoalMs > 0 && screenTimeData.totalTime > 0) {
+            val progress = screenTimeData.totalTime.toFloat() / totalGoalMs.toFloat()
+            // Only celebrate if user is at least 80% of goal and hasn't exceeded it
+            if (progress >= 0.8f && progress <= 1.0f) {
+                achievements.add(GoalAchievement(GoalType.DAILY_LIMIT, "Daily limit maintained"))
+            }
         }
         
         // Check break goal (if user took at least 3 breaks today)
@@ -355,7 +361,11 @@ class SmartNotificationScheduler(private val context: Context) {
     }
     
     private fun getDailyGoalMs(): Long {
-        return preferences.getLong("daily_goal_ms", 8 * 60 * 60 * 1000) // 8 hours default
+        // Compute from hours/minutes in overlay_settings (single source of truth)
+        val overlayPrefs = context.getSharedPreferences("overlay_settings", Context.MODE_PRIVATE)
+        val hours = overlayPrefs.getInt("daily_goal_hours", 8)
+        val minutes = overlayPrefs.getInt("daily_goal_minutes", 0)
+        return (hours * 60 + minutes) * 60 * 1000L
     }
     
     private fun getLastBreakTime(): Long {
@@ -363,14 +373,42 @@ class SmartNotificationScheduler(private val context: Context) {
     }
     
     private fun getRecentUsage(minutes: Int): Long {
-        // This would typically query usage stats for the last N minutes
-        // For now, return a placeholder
-        return 0L
+        return try {
+            val usageStatsManager = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+            val endTime = System.currentTimeMillis()
+            val startTime = endTime - TimeUnit.MINUTES.toMillis(minutes.toLong())
+            
+            // Query usage stats for the specified time range
+            // Use INTERVAL_BEST to get the most accurate data for custom time ranges
+            val usageStats = usageStatsManager.queryUsageStats(
+                UsageStatsManager.INTERVAL_BEST,
+                startTime,
+                endTime
+            ) ?: return 0L
+            
+            // Filter stats to only include usage within the time range
+            val filteredStats = usageStats.filter { stats ->
+                stats.lastTimeUsed >= startTime && stats.lastTimeUsed <= endTime
+            }
+            
+            // Apply app filtering using AppFilterManager
+            var totalTime = 0L
+            filteredStats.forEach { stats ->
+                if (appFilterManager.shouldTrackApp(stats.packageName)) {
+                    totalTime += stats.totalTimeInForeground
+                }
+            }
+            
+            totalTime
+        } catch (e: Exception) {
+            0L
+        }
     }
     
     private fun getTodayString(): String {
         val calendar = Calendar.getInstance()
-        return "${calendar.get(Calendar.YEAR)}-${calendar.get(Calendar.MONTH)}-${calendar.get(Calendar.DAY_OF_MONTH)}"
+        // Calendar.MONTH is 0-based (0-11), so add 1 for correct month
+        return "${calendar.get(Calendar.YEAR)}-${calendar.get(Calendar.MONTH) + 1}-${calendar.get(Calendar.DAY_OF_MONTH)}"
     }
     
     fun setLastBreakTime() {

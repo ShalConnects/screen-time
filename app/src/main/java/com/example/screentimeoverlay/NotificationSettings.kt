@@ -2,6 +2,8 @@ package com.example.screentimeoverlay
 
 import android.content.Context
 import android.content.SharedPreferences
+import org.json.JSONArray
+import org.json.JSONObject
 import java.util.Calendar
 
 /**
@@ -76,15 +78,46 @@ class NotificationSettings(private val context: Context) {
     }
     
     fun getCustomTriggers(): List<CustomTrigger> {
-        val triggersJson = preferences.getString("custom_triggers", "[]")
-        // In a real implementation, you would parse JSON here
-        // For now, return empty list
-        return emptyList()
+        val triggersJson = preferences.getString("custom_triggers", "[]") ?: "[]"
+        return try {
+            val jsonArray = JSONArray(triggersJson)
+            val triggers = mutableListOf<CustomTrigger>()
+            for (i in 0 until jsonArray.length()) {
+                val jsonObject = jsonArray.getJSONObject(i)
+                val name = jsonObject.getString("name")
+                val condition = jsonObject.getString("condition")
+                val message = jsonObject.getString("message")
+                val priorityName = jsonObject.optString("priority", AlertPriority.MEDIUM.name)
+                val priority = try {
+                    AlertPriority.valueOf(priorityName)
+                } catch (e: Exception) {
+                    AlertPriority.MEDIUM
+                }
+                triggers.add(CustomTrigger(name, condition, message, priority))
+            }
+            triggers
+        } catch (e: Exception) {
+            emptyList()
+        }
     }
     
     fun setCustomTriggers(triggers: List<CustomTrigger>) {
-        // In a real implementation, you would serialize to JSON here
-        preferences.edit().putString("custom_triggers", "[]").apply()
+        try {
+            val jsonArray = JSONArray()
+            triggers.forEach { trigger ->
+                val jsonObject = JSONObject().apply {
+                    put("name", trigger.name)
+                    put("condition", trigger.condition)
+                    put("message", trigger.message)
+                    put("priority", trigger.priority.name)
+                }
+                jsonArray.put(jsonObject)
+            }
+            preferences.edit().putString("custom_triggers", jsonArray.toString()).apply()
+        } catch (e: Exception) {
+            // If serialization fails, clear the triggers
+            preferences.edit().putString("custom_triggers", "[]").apply()
+        }
     }
     
     // Daily goal settings

@@ -27,19 +27,43 @@ class BatteryOptimizationManager(private val context: Context) {
     
     /**
      * Request to disable battery optimization
+     * Opens the app's settings page where user can disable battery optimization
      */
     @RequiresApi(Build.VERSION_CODES.M)
     fun requestDisableBatteryOptimization(activity: Activity) {
         try {
+            // First, try to open the direct battery optimization request dialog (Android 6.0+)
             val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
                 data = Uri.parse("package:${context.packageName}")
             }
-            activity.startActivityForResult(intent, BATTERY_OPTIMIZATION_REQUEST_CODE)
+            // Check if the intent can be resolved
+            if (intent.resolveActivity(context.packageManager) != null) {
+                activity.startActivity(intent)
+            } else {
+                // Fallback: Open app's settings page where user can navigate to battery settings
+                openAppBatterySettings(activity)
+            }
         } catch (e: Exception) {
-            // Fallback to general battery optimization settings
+            // Fallback: Open app's settings page where user can navigate to battery settings
+            openAppBatterySettings(activity)
+        }
+    }
+    
+    /**
+     * Open the app's settings page where user can navigate to battery optimization
+     */
+    private fun openAppBatterySettings(activity: Activity) {
+        try {
+            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                data = Uri.fromParts("package", context.packageName, null)
+            }
+            activity.startActivity(intent)
+            Toast.makeText(context, "Navigate to Battery > Battery optimization and disable it for this app", Toast.LENGTH_LONG).show()
+        } catch (e: Exception) {
+            // Final fallback: Open general battery optimization settings
             val intent = Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
             activity.startActivity(intent)
-            Toast.makeText(context, "Please disable battery optimization for this app", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Please disable battery optimization for Screen Time", Toast.LENGTH_LONG).show()
         }
     }
     

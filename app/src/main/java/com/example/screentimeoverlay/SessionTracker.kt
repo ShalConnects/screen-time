@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
 class SessionTracker(private val context: Context) {
     
     private val prefs: SharedPreferences = context.getSharedPreferences("session_tracker", Context.MODE_PRIVATE)
-    private val sessionThresholdMs = TimeUnit.MINUTES.toMillis(2) // Minimum 2 minutes for a session
+    private val sessionThresholdMs = TimeUnit.SECONDS.toMillis(30) // Minimum 30 seconds for a session (lowered for better tracking)
     private val breakThresholdMs = TimeUnit.MINUTES.toMillis(5) // 5 minutes break between sessions
     
     private var currentSession: AppSession? = null
@@ -52,15 +52,23 @@ class SessionTracker(private val context: Context) {
             // Update existing session
             currentSession?.let { session ->
                 if (session.packageName != packageName) {
-                    // App switch within session - update session
-                    session.packageName = packageName
-                    session.appName = appName
-                    session.lastActivityTime = currentTime
-                    Log.d(TAG, "Updated session to $appName")
-                } else {
-                    // Same app, just update activity time
-                    session.lastActivityTime = currentTime
+                    // App switch within session - save old app session and start new one
+                    endCurrentSession()
+                    // Start new session for the new app
+                    currentSession = AppSession(
+                        id = UUID.randomUUID().toString(),
+                        packageName = packageName,
+                        appName = appName,
+                        startTime = currentTime,
+                        endTime = 0,
+                        totalTime = 0,
+                        isActive = true,
+                        lastActivityTime = currentTime
+                    )
+                    sessionStartTime = currentTime
+                    Log.d(TAG, "App switched - Started new session for $appName")
                 }
+                // If same app, don't update lastActivityTime here - let updateSession() handle it
             }
         }
         
@@ -75,11 +83,13 @@ class SessionTracker(private val context: Context) {
         currentSession?.let { session ->
             if (session.isActive) {
                 val timeSinceLastUpdate = currentTime - session.lastActivityTime
-                if (timeSinceLastUpdate < breakThresholdMs) {
+                Log.d(TAG, "Updating session for ${session.appName}: adding ${formatTime(timeSinceLastUpdate)} (total: ${formatTime(session.totalTime + timeSinceLastUpdate)})")
+                if (timeSinceLastUpdate < breakThresholdMs && timeSinceLastUpdate > 0) {
                     session.totalTime += timeSinceLastUpdate
                     session.lastActivityTime = currentTime
-                } else {
+                } else if (timeSinceLastUpdate >= breakThresholdMs) {
                     // Session has been inactive too long, end it
+                    Log.d(TAG, "Session inactive for ${formatTime(timeSinceLastUpdate)}, ending session")
                     endCurrentSession()
                 }
             }
@@ -117,16 +127,22 @@ class SessionTracker(private val context: Context) {
         val calendar = Calendar.getInstance()
         calendar.time = date
         calendar.set(Calendar.HOUR_OF_DAY, 0)
-        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.MINUTE, 1) // 00:01 AM - align with overlay day start
         calendar.set(Calendar.SECOND, 0)
         calendar.set(Calendar.MILLISECOND, 0)
         
         val startOfDay = calendar.timeInMillis
         val endOfDay = startOfDay + TimeUnit.DAYS.toMillis(1)
         
-        return getAllSessions().filter { session ->
-            session.startTime >= startOfDay && session.startTime < endOfDay
-        }
+        val filter = AppFilterManager(context)
+        return getAllSessions()
+            .filter { session ->
+                session.startTime >= startOfDay && session.startTime < endOfDay
+            }
+            .filter { session ->
+                // Apply same app filtering as overlay
+                filter.shouldTrackApp(session.packageName)
+            }
     }
     
     /**
@@ -284,6 +300,7 @@ class SessionTracker(private val context: Context) {
         val sessionsArray = try {
             JSONArray(sessionsJson)
         } catch (e: Exception) {
+            Log.e(TAG, "Error parsing existing sessions JSON", e)
             JSONArray()
         }
         
@@ -298,7 +315,13 @@ class SessionTracker(private val context: Context) {
         }
         
         sessionsArray.put(sessionJson)
-        prefs.edit().putString("sessions", sessionsArray.toString()).apply()
+        val success = prefs.edit().putString("sessions", sessionsArray.toString()).commit()
+        
+        if (success) {
+            Log.d(TAG, "✓ Session saved successfully: ${session.appName}, ${formatTime(session.totalTime)}, total sessions: ${sessionsArray.length()}")
+        } else {
+            Log.e(TAG, "✗ Failed to save session to SharedPreferences")
+        }
     }
     
     /**
@@ -323,10 +346,40 @@ class SessionTracker(private val context: Context) {
                 ))
             }
             
+            Log.d(TAG, "Loaded ${sessions.size} sessions from storage")
             sessions
         } catch (e: Exception) {
             Log.e(TAG, "Error loading sessions", e)
             emptyList()
+        }
+    }
+    
+    /**
+     * Get total number of saved sessions (for debugging)
+     */
+    fun getTotalSessionCount(): Int {
+        return getAllSessions().size
+    }
+    
+    /**
+     * Get debug info about current session state
+     */
+    fun getDebugInfo(): String {
+        val totalSessions = getTotalSessionCount()
+        val todaySessions = getSessionsForDate(Date())
+        val current = currentSession
+        
+        return buildString {
+            appendLine("=== Session Tracker Debug Info ===")
+            appendLine("Total sessions saved: $totalSessions")
+            appendLine("Today's sessions: ${todaySessions.size}")
+            appendLine("Current session: ${if (current != null) "${current.appName} (${formatTime(current.totalTime)})" else "None"}")
+            if (todaySessions.isNotEmpty()) {
+                appendLine("\nToday's sessions breakdown:")
+                todaySessions.forEach { session ->
+                    appendLine("  - ${session.appName}: ${formatTime(session.totalTime)}")
+                }
+            }
         }
     }
     

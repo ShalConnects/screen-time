@@ -150,7 +150,11 @@ class UsagePredictor(private val context: Context) {
     }
     
     private fun getDailyGoal(): Long {
-        return prefs.getLong("daily_goal_ms", TimeUnit.HOURS.toMillis(8))
+        // Compute from hours/minutes in overlay_settings (single source of truth)
+        val overlayPrefs = context.getSharedPreferences("overlay_settings", Context.MODE_PRIVATE)
+        val hours = overlayPrefs.getInt("daily_goal_hours", 8)
+        val minutes = overlayPrefs.getInt("daily_goal_minutes", 0)
+        return (hours * 60 + minutes) * 60 * 1000L
     }
     
     private fun calculatePredictionConfidence(patterns: HistoricalPatterns, currentUsage: UsageData): Int {
@@ -298,7 +302,7 @@ class UsagePredictor(private val context: Context) {
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = timestamp
         calendar.set(Calendar.HOUR_OF_DAY, 0)
-        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.MINUTE, 1) // 00:01 AM - align with overlay day start
         calendar.set(Calendar.SECOND, 0)
         calendar.set(Calendar.MILLISECOND, 0)
         return calendar.timeInMillis

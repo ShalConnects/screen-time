@@ -29,4 +29,16 @@
     
     <!-- Launcher Icon Colors -->
     <color name="ic_launcher_background">#6366F1</color>
+    
+    <!-- Onboarding Colors -->
+    <color name="background_color">#121212</color>
+    <color name="primary_text">#FFFFFF</color>
+    <color name="secondary_text">#E0E0E0</color>
+    <color name="primary_color">#6366F1</color>
+    <color name="success_color">#10B981</color>
+    <color name="privacy_notice_background">#1A3B82F6</color>
+    <color name="privacy_icon_color">#3B82F6</color>
+    
+    <!-- Switch Colors -->
+    <color name="switch_disabled">#757575</color>
 </resources>

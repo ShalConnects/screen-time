@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.Manifest
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import java.util.Calendar
@@ -36,6 +37,22 @@ class NotificationManager(private val context: Context) {
     
     init {
         createNotificationChannels()
+    }
+    
+    /**
+     * Check if notification permission is granted (required for Android 13+)
+     */
+    private fun isNotificationPermissionGranted(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            android.content.pm.PackageManager.PERMISSION_GRANTED ==
+                androidx.core.content.ContextCompat.checkSelfPermission(
+                    context,
+                    android.Manifest.permission.POST_NOTIFICATIONS
+                )
+        } else {
+            // For Android 12 and below, notifications don't require runtime permission
+            true
+        }
     }
     
     private fun createNotificationChannels() {
@@ -102,6 +119,7 @@ class NotificationManager(private val context: Context) {
         sessionData: SessionStats
     ) {
         if (!isRemindersEnabled()) return
+        if (!isNotificationPermissionGranted()) return
         
         val message = getContextualMessage(timeOfDay, usageData, sessionData)
         val title = getContextualTitle(timeOfDay)
@@ -133,6 +151,7 @@ class NotificationManager(private val context: Context) {
         duration: Int
     ) {
         if (!isBreakSuggestionsEnabled()) return
+        if (!isNotificationPermissionGranted()) return
         
         val title = "Time for a Break!"
         val message = when (breakType) {
@@ -168,6 +187,28 @@ class NotificationManager(private val context: Context) {
         
         notificationManager.notify(NOTIFICATION_BREAK, notification)
     }
+
+    /**
+     * Show a simple goal/limit reached notification
+     */
+    fun showLimitReached() {
+        if (!isRemindersEnabled()) return
+        if (!isNotificationPermissionGranted()) return
+        val intent = Intent(context, MainActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(
+            context, 0, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        val notification = NotificationCompat.Builder(context, CHANNEL_GOALS)
+            .setContentTitle("Daily limit reached")
+            .setContentText("You’ve hit today’s screen time limit.")
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .build()
+        notificationManager.notify(NOTIFICATION_GOAL, notification)
+    }
     
     /**
      * Show goal celebration notification
@@ -178,6 +219,7 @@ class NotificationManager(private val context: Context) {
         streak: Int = 0
     ) {
         if (!isGoalCelebrationsEnabled()) return
+        if (!isNotificationPermissionGranted()) return
         
         val title = when (goalType) {
             GoalType.DAILY_LIMIT -> "🎉 Daily Goal Achieved!"
@@ -222,6 +264,7 @@ class NotificationManager(private val context: Context) {
         priority: AlertPriority = AlertPriority.MEDIUM
     ) {
         if (!isCustomAlertsEnabled()) return
+        if (!isNotificationPermissionGranted()) return
         
         val title = "Screen Time Alert"
         val priorityLevel = when (priority) {
@@ -306,7 +349,11 @@ class NotificationManager(private val context: Context) {
     }
     
     private fun getDailyGoal(): Long {
-        return preferences.getLong("daily_goal_ms", 8 * 60 * 60 * 1000) // 8 hours default
+        // Compute from hours/minutes in overlay_settings (single source of truth)
+        val overlayPrefs = context.getSharedPreferences("overlay_settings", Context.MODE_PRIVATE)
+        val hours = overlayPrefs.getInt("daily_goal_hours", 8)
+        val minutes = overlayPrefs.getInt("daily_goal_minutes", 0)
+        return (hours * 60 + minutes) * 60 * 1000L
     }
     
     // Settings methods
@@ -332,8 +379,12 @@ class NotificationManager(private val context: Context) {
     }
     
     fun setDailyGoal(hours: Int, minutes: Int) {
-        val totalMs = (hours * 60 + minutes) * 60 * 1000L
-        preferences.edit().putLong("daily_goal_ms", totalMs).apply()
+        // Save to overlay_settings (single source of truth) - daily_goal_ms is deprecated
+        val overlayPrefs = context.getSharedPreferences("overlay_settings", Context.MODE_PRIVATE)
+        overlayPrefs.edit()
+            .putInt("daily_goal_hours", hours)
+            .putInt("daily_goal_minutes", minutes)
+            .apply()
     }
     
     fun setReminderFrequency(frequency: ReminderFrequency) {

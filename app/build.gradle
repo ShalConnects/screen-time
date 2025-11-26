@@ -8,14 +8,14 @@ import java.io.FileInputStream
 
 android {
     namespace 'com.example.screentimeoverlay'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.screentime.overlay"
         minSdk 26
-        targetSdk 34
-        versionCode 1
-        versionName "1.0.0"
+        targetSdk 35
+        versionCode 17
+        versionName "10.0.6"
         
         // Add proper app name and description
         resValue "string", "app_name", "Screen Time Tracker"
@@ -29,6 +29,10 @@ android {
 
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        buildConfig true
     }
 
     signingConfigs {
@@ -65,15 +69,16 @@ dependencies {
     implementation 'androidx.dynamicanimation:dynamicanimation:1.0.0'
     
     // Edge lighting and AOD support
-    implementation 'androidx.work:work-runtime-ktx:2.9.0'
     implementation 'androidx.lifecycle:lifecycle-service:2.7.0'
-    
-    // Lock screen widgets
-    implementation 'androidx.glance:glance-appwidget:1.0.0'
-    implementation 'androidx.glance:glance-material3:1.0.0'
     
     // Samsung Edge Lighting - removed as it's not available in public repositories
     // Note: Samsung-specific features should be implemented using reflection or conditional compilation
+
+    // WorkManager for local-midnight scheduling
+    implementation 'androidx.work:work-runtime-ktx:2.9.0'
+    
+    // Chart library for analytics
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }
 
 

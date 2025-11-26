@@ -192,25 +192,45 @@ class AppFilterManager(private val context: Context) {
      */
     fun getAllInstalledApps(): List<AppInfo> {
         val installedApps = mutableListOf<AppInfo>()
-        val packages = packageManager.getInstalledPackages(0)
-        
-        for (packageInfo in packages) {
-            if (packageInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0) {
-                val appName = packageManager.getApplicationLabel(packageInfo.applicationInfo).toString()
-                val category = getAppCategory(packageInfo.packageName)
-                val isWhitelisted = getWhitelist().contains(packageInfo.packageName)
-                val isBlacklisted = getBlacklist().contains(packageInfo.packageName)
-                
-                installedApps.add(
-                    AppInfo(
-                        packageName = packageInfo.packageName,
-                        appName = appName,
-                        category = category,
-                        isWhitelisted = isWhitelisted,
-                        isBlacklisted = isBlacklisted
-                    )
-                )
+        try {
+            val packages = packageManager.getInstalledPackages(android.content.pm.PackageManager.GET_META_DATA)
+            
+            for (packageInfo in packages) {
+                val appInfo = packageInfo.applicationInfo
+                if (appInfo != null) {
+                    // Include user-installed apps and updated system apps
+                    val isSystemApp = (appInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0
+                    val isUpdatedSystemApp = (appInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
+                    
+                    // Include user apps and updated system apps (but exclude pure system apps)
+                    if (!isSystemApp || isUpdatedSystemApp) {
+                        try {
+                            val appName = packageManager.getApplicationLabel(appInfo).toString()
+                            if (appName.isNotBlank()) {
+                                val category = getAppCategory(packageInfo.packageName)
+                                val isWhitelisted = getWhitelist().contains(packageInfo.packageName)
+                                val isBlacklisted = getBlacklist().contains(packageInfo.packageName)
+                                
+                                installedApps.add(
+                                    AppInfo(
+                                        packageName = packageInfo.packageName,
+                                        appName = appName,
+                                        category = category,
+                                        isWhitelisted = isWhitelisted,
+                                        isBlacklisted = isBlacklisted
+                                    )
+                                )
+                            }
+                        } catch (e: Exception) {
+                            // Skip apps that can't be labeled
+                            continue
+                        }
+                    }
+                }
             }
+        } catch (e: Exception) {
+            // Return empty list on error
+            return emptyList()
         }
         
         return installedApps.sortedBy { it.appName }

@@ -44,6 +44,15 @@
                 android:progressDrawable="@drawable/progress_bar_animated"
                 android:background="@drawable/progress_bar_background"/>
 
+            <!-- Progress Info (percentage • remaining) -->
+            <TextView
+                android:id="@+id/progressInfoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="9sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginTop="2dp"/>
+
             <!-- Goal Text -->
             <TextView
                 android:id="@+id/goalTextProgress"

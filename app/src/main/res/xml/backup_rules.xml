@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- Exclude sensitive usage data from backup -->
+    <exclude domain="sharedpref" path="app_categories.xml"/>
+    <exclude domain="sharedpref" path="app_filters.xml"/>
+    <exclude domain="sharedpref" path="usage_stats.xml"/>
+    <exclude domain="database" path="screentime.db"/>
+    <exclude domain="file" path="exports/"/>
+</full-backup-content>

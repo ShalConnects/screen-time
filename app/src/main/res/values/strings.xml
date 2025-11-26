@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Screen Time</string>
-    <string name="accessibility_service_description">Screen Time Overlay - Tracks app usage for screen time monitoring</string>
-    <string name="widget_description">Screen Time Widget - Quick access to your daily screen time stats</string>
+    <string name="app_name">Screen Time Tracker</string>
+    <string name="app_description">Track your screen time with beautiful overlays and detailed analytics</string>
+    <string name="accessibility_service_description">Screen Time Tracker - Tracks app usage for screen time monitoring</string>
+    <string name="widget_description">Screen Time Tracker Widget - Quick access to your daily screen time stats</string>
+    <string name="daily_summary_title">Daily Summary</string>
+    <string name="daily_summary_placeholder">You doom‑scrolled 0.0 miles · 0 words typed · 0 taps</string>
+    <string name="unit_hour_short">h</string>
+    <string name="unit_minute_short">m</string>
 </resources>

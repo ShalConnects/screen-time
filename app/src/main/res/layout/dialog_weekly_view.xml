@@ -19,8 +19,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Weekly View"
-            android:textSize="20sp"
+            android:text="Weekly Overview"
+            android:textSize="18sp"
             android:textColor="@color/text_primary"
             android:textStyle="bold"
             android:drawableStart="@drawable/ic_analytics"
@@ -49,14 +49,7 @@
         android:padding="16dp"
         android:layout_marginBottom="16dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Week Overview"
-            android:textSize="16sp"
-            android:textColor="@color/text_primary"
-            android:textStyle="bold"
-            android:layout_marginBottom="12dp"/>
+        
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -146,30 +139,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Focus Score"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_tertiary"
-                    android:layout_marginBottom="4dp"/>
-
-                <TextView
-                    android:id="@+id/focusScoreText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0%"
-                    android:textSize="16sp"
-                    android:textColor="@color/text_primary"
-                    android:textStyle="bold"/>
-
-            </LinearLayout>
+            
 
         </LinearLayout>
 

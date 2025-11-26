@@ -39,7 +39,8 @@ class LimitPortionManager {
         val currentMinutes = TimeUnit.MILLISECONDS.toMinutes(currentUsageMs).toInt()
         val portions = calculatePortions(dailyGoal)
         
-        // Check each portion to see if we've reached the end and haven't shown reminder yet
+        // Check each portion to see if we've reached the END of a portion (33%, 66%, 100%)
+        // and haven't shown that portion's reminder yet
         portions.forEach { portion ->
             if (currentMinutes >= portion.endMinutes && !shownReminders.contains(portion.portionNumber)) {
                 return portion.portionNumber
@@ -54,9 +55,47 @@ class LimitPortionManager {
      */
     fun getRemainingTime(currentUsageMs: Long, dailyGoal: DailyGoal): Int {
         val currentMinutes = TimeUnit.MILLISECONDS.toMinutes(currentUsageMs).toInt()
-        val totalMinutes = dailyGoal.getTotalMinutes()
-        val remaining = totalMinutes - currentMinutes
-        return if (remaining > 0) remaining else 0
+        val portions = calculatePortions(dailyGoal)
+        
+        // Find which portion we're currently in
+        val currentPortion = portions.find { portion ->
+            currentMinutes >= portion.startMinutes && currentMinutes < portion.endMinutes
+        } ?: portions.last() // If we're past all portions, use the last one
+        
+        // Calculate remaining time in current portion
+        val remainingInPortion = currentPortion.endMinutes - currentMinutes
+        return if (remainingInPortion > 0) remainingInPortion else 0
+    }
+    
+    /**
+     * Get current portion number (1, 2, or 3)
+     */
+    fun getCurrentPortion(currentUsageMs: Long, dailyGoal: DailyGoal): Int {
+        val currentMinutes = TimeUnit.MILLISECONDS.toMinutes(currentUsageMs).toInt()
+        val portions = calculatePortions(dailyGoal)
+        
+        // Find which portion we're currently in
+        val currentPortion = portions.find { portion ->
+            currentMinutes >= portion.startMinutes && currentMinutes < portion.endMinutes
+        } ?: portions.last() // If we're past all portions, use the last one
+        
+        return currentPortion.portionNumber
+    }
+    
+    /**
+     * Get current portion progress as a fraction (e.g., 0.5 for halfway through portion)
+     */
+    fun getCurrentPortionProgress(currentUsageMs: Long, dailyGoal: DailyGoal): Float {
+        val currentMinutes = TimeUnit.MILLISECONDS.toMinutes(currentUsageMs).toInt()
+        val portions = calculatePortions(dailyGoal)
+        
+        // Find which portion we're currently in
+        val currentPortion = portions.find { portion ->
+            currentMinutes >= portion.startMinutes && currentMinutes < portion.endMinutes
+        } ?: portions.last() // If we're past all portions, use the last one
+        
+        val progressInPortion = currentMinutes - currentPortion.startMinutes
+        return progressInPortion.toFloat() / currentPortion.durationMinutes.toFloat()
     }
     
     /**

@@ -265,10 +265,11 @@ class AppCategoryManager(private val context: Context) {
         val packages = packageManager.getInstalledPackages(0)
         
         for (packageInfo in packages) {
-            if (packageInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0) {
+            val appInfo = packageInfo.applicationInfo
+            if (appInfo != null && appInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0) {
                 val appCategory = getAppCategory(packageInfo.packageName)
                 if (appCategory == category) {
-                    val appName = packageManager.getApplicationLabel(packageInfo.applicationInfo).toString()
+                    val appName = packageManager.getApplicationLabel(appInfo).toString()
                     apps.add(AppCategoryInfo(
                         packageName = packageInfo.packageName,
                         appName = appName,
@@ -290,8 +291,9 @@ class AppCategoryManager(private val context: Context) {
         val packages = packageManager.getInstalledPackages(0)
         
         for (packageInfo in packages) {
-            if (packageInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0) {
-                val appName = packageManager.getApplicationLabel(packageInfo.applicationInfo).toString()
+            val appInfo = packageInfo.applicationInfo
+            if (appInfo != null && appInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0) {
+                val appName = packageManager.getApplicationLabel(appInfo).toString()
                 val category = getAppCategory(packageInfo.packageName)
                 val isCustom = getCustomCategory(packageInfo.packageName) != null
                 

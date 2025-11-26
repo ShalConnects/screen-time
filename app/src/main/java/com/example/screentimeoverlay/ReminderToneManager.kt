@@ -68,41 +68,41 @@ class ReminderToneManager(private val context: Context) {
     
     private fun getHumorMessages(): List<String> {
         return listOf(
-            "One third of your limit down! Time flies when you're having fun... or procrastinating!",
-            "Two thirds done! Your screen is starting to wonder if you'll ever put it down!",
-            "Limit reached! Your screen says thanks for the workout! Time to rest those thumbs!"
+            "33% down already? Either you’re really efficient… or just really distracted.",
+            "66%! Your phone’s starting to think it’s your soulmate.",
+            "Boom! Limit reached. Your thumbs have officially earned a vacation."
         )
     }
     
     private fun getRudeMessages(): List<String> {
         return listOf(
-            "Seriously? You're already at 33% of your limit!",
-            "66% gone! Do you ever put your phone down?",
-            "Limit reached! Congratulations on wasting your entire limit!"
+            "33% gone already? Impressive… in a tragic way.",
+            "66%? Wow. Maybe go outside and see what “sunlight” feels like.",
+            "Limit hit. Congrats—you’ve officially run out of excuses."
         )
     }
     
     private fun getVeryRudeMessages(): List<String> {
         return listOf(
-            "33% GONE! Are you addicted or what?!",
-            "66% WASTED! Get a life already!",
-            "LIMIT DESTROYED! Your productivity just called - it gave up on you!"
+            "33% gone?! Is doomscrolling your full-time job now?",
+            "66% wasted! Even your Wi-Fi is judging you.",
+            "LIMIT ANNIHILATED! You’re not scrolling—you’re spiraling."
         )
     }
     
     private fun getMotivateMessages(): List<String> {
         return listOf(
-            "You're 1/3 through your limit! Stay mindful and make every minute count!",
-            "2/3 of the way! You're doing great at tracking your usage! Keep it up!",
-            "Limit reached! You've completed your journey! Take a well-deserved break!"
+            "You’re 1/3 in! Small steps add up—stay balanced, stay focused.",
+            "You’ve used 2/3 already—great job being aware of your habits!",
+            "Limit reached! Time to recharge and come back stronger."
         )
     }
     
     private fun getFriendlyMessages(): List<String> {
         return listOf(
-            "Hey there! You've reached your first milestone! You're 1/3 through your daily limit.",
-            "Friendly reminder! You're now at 2/3 of your limit. Time is precious!",
-            "You've reached your limit! Thanks for being mindful of your screen time today!"
+            "You’ve reached 33%! Just a heads-up, you’re doing great so far.",
+            "Two-thirds done! Don’t forget to stretch and blink!",
+            "Limit reached—thank you for taking care of your screen time like a pro."
         )
     }
     

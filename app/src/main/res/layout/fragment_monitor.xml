@@ -32,108 +32,225 @@
             android:gravity="center"
             android:drawableTint="#FFFFFF"/>
 
-        <!-- Position Settings -->
+        <!-- Current Session Tracker -->
         <LinearLayout
+            android:id="@+id/currentSessionCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="8dp">
-
-            <Button
-                android:id="@+id/autoPositionButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Auto"
-                android:textSize="12sp"
-                android:textColor="#FFFFFF"
-                android:padding="8dp"
-                android:layout_marginEnd="4dp"
-                android:background="@drawable/button_glass"/>
-
-            <Button
-                android:id="@+id/topRightPositionButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Top Right"
-                android:textSize="12sp"
-                android:textColor="#FFFFFF"
-                android:padding="8dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
-                android:background="@drawable/button_glass"/>
-
-            <Button
-                android:id="@+id/bottomRightPositionButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Bottom Right"
-                android:textSize="12sp"
-                android:textColor="#FFFFFF"
-                android:padding="8dp"
-                android:layout_marginStart="4dp"
-                android:background="@drawable/button_glass"/>
-
-        </LinearLayout>
-
-        <!-- Basic Settings - Side by Side -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
-
-            <!-- Touch Passthrough - Left Half -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="16dp"
-                android:background="@drawable/glass_background"
-                android:layout_marginEnd="4dp">
+            android:orientation="vertical"
+            android:background="@drawable/glass_background"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Touch Passthrough"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp"/>
+                android:text="Current Session"
+                android:textSize="14sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginBottom="8dp"/>
 
-                <Switch
-                    android:id="@+id/touchPassthroughSwitch"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/currentAppName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="No active session"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/currentSessionTime"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="0m"
+                    android:textSize="18sp"
+                    android:textColor="@color/accent_primary"
+                    android:textStyle="bold"/>
 
             </LinearLayout>
 
-            <!-- Auto-Hide Mode - Right Half -->
-            <LinearLayout
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/currentAppCategory"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:text=""
+                android:textSize="11sp"
+                android:textColor="@color/text_tertiary"
+                android:layout_marginTop="4dp"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+        <!-- Overlay Preview & Customization -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/glass_background"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <!-- Position Buttons -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Position"
+                android:textSize="14sp"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="8dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <Button
+                    android:id="@+id/autoPositionButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Auto"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"
+                    android:padding="8dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/button_glass"/>
+
+                <Button
+                    android:id="@+id/topRightPositionButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Top Right"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"
+                    android:padding="8dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/button_glass"/>
+
+                <Button
+                    android:id="@+id/bottomRightPositionButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Bottom Right"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"
+                    android:padding="8dp"
+                    android:layout_marginStart="4dp"
+                    android:background="@drawable/button_glass"/>
+
+            </LinearLayout>
+
+            <!-- Opacity Slider -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Opacity"
+                android:textSize="14sp"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="8dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:padding="16dp"
-                android:background="@drawable/glass_background"
-                android:layout_marginStart="4dp">
+                android:layout_marginBottom="16dp">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Auto-Hide Mode"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp"/>
+                <SeekBar
+                    android:id="@+id/opacitySlider"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="100"
+                    android:progress="80"
+                    android:progressTint="@color/accent_primary"
+                    android:thumbTint="@color/accent_primary"
+                    android:layout_marginEnd="12dp"/>
 
-                <Switch
-                    android:id="@+id/autoHideSwitch"
+                <TextView
+                    android:id="@+id/opacityValue"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="80%"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"
+                    android:minWidth="40dp"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+            <!-- Touch Passthrough and Auto-Hide Switches -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <!-- Touch Passthrough - Left Half -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginEnd="4dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Touch Passthrough"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"/>
+
+                    <Switch
+                        android:id="@+id/touchPassthroughSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:thumbTint="@color/switch_thumb_color"
+                        android:trackTint="@color/switch_track_color"/>
+
+                </LinearLayout>
+
+                <!-- Auto-Hide Mode - Right Half -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="4dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Auto-Hide Mode"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"/>
+
+                    <Switch
+                        android:id="@+id/autoHideSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:thumbTint="@color/switch_thumb_color"
+                        android:trackTint="@color/switch_track_color"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -197,7 +314,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="8h 0m"
-                    android:textColor="#4CAF50"
+                    android:textColor="@color/status_success"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:background="@drawable/glass_background"
@@ -238,8 +355,8 @@
                         android:layout_weight="1"
                         android:max="24"
                         android:progress="8"
-                        android:progressTint="#4CAF50"
-                        android:thumbTint="#4CAF50"
+                        android:progressTint="@color/accent_primary"
+                        android:thumbTint="@color/accent_primary"
                         android:layout_marginEnd="12dp"/>
 
                     <TextView
@@ -278,8 +395,8 @@
                         android:layout_weight="1"
                         android:max="59"
                         android:progress="0"
-                        android:progressTint="#4CAF50"
-                        android:thumbTint="#4CAF50"
+                        android:progressTint="@color/accent_primary"
+                        android:thumbTint="@color/accent_primary"
                         android:layout_marginEnd="12dp"/>
 
                     <TextView
@@ -352,18 +469,6 @@
 
             </LinearLayout>
 
-
-            <!-- Action Button -->
-            <Button
-                android:id="@+id/setGoalButton"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:text="SET LIMIT"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:background="@drawable/button_glass_start"/>
-
             <!-- Reminder Settings -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -374,15 +479,6 @@
                 android:background="@drawable/glass_background"
                 android:visibility="gone"
                 android:id="@+id/reminderSettingsContainer">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Reminder Settings"
-                    android:textSize="16sp"
-                    android:textColor="@color/text_primary"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="12dp"/>
 
                 <TextView
                     android:id="@+id/reminderDescriptionText"
@@ -505,11 +601,86 @@
                 <Switch
                     android:id="@+id/enableRemindersSwitch"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:thumbTint="@color/switch_thumb_color"
+                    android:trackTint="@color/switch_track_color"/>
 
             </LinearLayout>
 
         </LinearLayout>
+
+        <!-- Smart Break Reminders -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/glass_background"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <!-- Take a Break Button -->
+            <Button
+                android:id="@+id/takeBreakButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Take a 5-Minute Break"
+                android:textSize="14sp"
+                android:textColor="#FFFFFF"
+                android:padding="16dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/button_glass"/>
+
+            <!-- Break Timer (hidden when not active) -->
+            <LinearLayout
+                android:id="@+id/breakTimerContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:background="@drawable/glass_background"
+                android:layout_marginBottom="12dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Break in progress..."
+                    android:textSize="14sp"
+                    android:textColor="@color/text_primary"/>
+
+                <TextView
+                    android:id="@+id/breakTimerText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5:00"
+                    android:textSize="18sp"
+                    android:textColor="@color/accent_primary"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <!-- Break History -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Today's Breaks"
+                android:textSize="12sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/breakHistoryText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No breaks taken today"
+                android:textSize="12sp"
+                android:textColor="@color/text_tertiary"/>
+
+        </LinearLayout>
+
+        
 
     </LinearLayout>
 

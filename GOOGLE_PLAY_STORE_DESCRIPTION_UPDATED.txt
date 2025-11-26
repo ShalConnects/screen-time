@@ -1,0 +1,60 @@
+UPDATED GOOGLE PLAY STORE DESCRIPTION
+=====================================
+
+IMPORTANT: Update this in Play Console > Store presence > Main store listing > Full description (en-US)
+
+---
+
+FULL DESCRIPTION (en-US):
+------------------------
+
+Screen Time Tracker helps you monitor and manage your digital habits with beautiful real-time overlays and comprehensive analytics.
+
+KEY FEATURES:
+
+• Real-Time Overlay: See your screen time at a glance with a customizable floating overlay that works across all apps
+• Detailed Analytics: Get insights into your daily, weekly, and monthly usage patterns with beautiful charts and graphs
+• App Usage Tracking: Track time spent in each app with detailed breakdowns and categorization
+• Productivity Insights: Understand your digital habits with productivity scores and focus metrics
+• Goal Setting: Set daily screen time goals and receive reminders when you're approaching your limits
+• Export Data: Export your usage data for personal analysis
+• Privacy-First: All data is stored locally on your device and never shared
+
+ACCESSIBILITY SERVICE:
+This app uses the AccessibilityService API to provide optional enhanced metrics tracking, including tap counts, scroll distance estimates, and word typing estimates. This feature is completely optional and can be enabled or disabled at any time in the app settings. When enabled, the AccessibilityService only collects event metadata (counts and distances) and does not access any personal content, passwords, or sensitive information. All data collected through the AccessibilityService is stored locally on your device and is never transmitted to external servers.
+
+PRIVACY & DATA:
+All screen time and usage data is stored locally on your device. We do not collect, transmit, or share any personal data. Your privacy is our priority.
+
+PERMISSIONS EXPLAINED:
+• Overlay Permission: Required to display the real-time screen time overlay
+• Usage Access Permission: Required to track which apps you use and for how long
+• Accessibility Service (Optional): Used only if you choose to enable enhanced metrics tracking
+
+Perfect for anyone looking to:
+- Reduce screen time and digital addiction
+- Improve productivity and focus
+- Understand their digital habits
+- Set and achieve screen time goals
+- Track app usage patterns
+
+Download Screen Time Tracker today and take control of your digital wellness!
+
+---
+
+CHANGES MADE:
+-------------
+1. ✅ Removed "Keywords:" section (was causing metadata policy violation)
+2. ✅ Added AccessibilityService API disclosure section (required by policy)
+3. ✅ Improved formatting and structure
+4. ✅ Made description more user-friendly and compliant
+
+---
+
+NOTES:
+------
+- The description must be updated in Google Play Console
+- Go to: Play Console > Your App > Store presence > Main store listing
+- Update the "Full description (en-US)" field
+- Make sure to save and submit for review
+

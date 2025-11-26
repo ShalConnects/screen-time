@@ -25,6 +25,10 @@ class SmartPositioningManager(private val context: Context) {
         val screenWidth = displayMetrics.widthPixels
         val screenHeight = displayMetrics.heightPixels
         
+        // Use default dimensions if not measured yet
+        val width = if (overlayWidth > 0) overlayWidth else 200
+        val height = if (overlayHeight > 0) overlayHeight else 100
+        
         // Get system UI dimensions (status bar, navigation bar)
         val statusBarHeight = getStatusBarHeight()
         val navigationBarHeight = getNavigationBarHeight()
@@ -34,10 +38,10 @@ class SmartPositioningManager(private val context: Context) {
         val availableHeight = screenHeight - statusBarHeight - navigationBarHeight
         
         // Define safe zones (avoiding system UI and common app UI elements)
-        val safeZones = getSafeZones(availableWidth, availableHeight, overlayWidth, overlayHeight)
+        val safeZones = getSafeZones(availableWidth, availableHeight, width, height)
         
         // Find the best position that avoids UI elements
-        val bestPosition = findBestPosition(safeZones, overlayWidth, overlayHeight)
+        val bestPosition = findBestPosition(safeZones, width, height)
         
         return bestPosition
     }

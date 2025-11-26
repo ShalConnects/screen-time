@@ -132,7 +132,8 @@
                 <li>Device model and operating system version</li>
                 <li>App version and installation date</li>
                 <li>Battery optimization settings</li>
-                <li>Accessibility service permissions</li>
+                <li>Usage statistics permissions status</li>
+                <li>Overlay permission status</li>
             </ul>
 
             <h3>1.3 Personal Settings</h3>
@@ -185,18 +186,20 @@
             <h3>4.1 Required Permissions</h3>
             <p>Our app requires the following permissions to function properly:</p>
             <ul>
-                <li><strong>Usage Access:</strong> To track app usage and screen time</li>
-                <li><strong>Overlay Permission:</strong> To display the screen time overlay</li>
-                <li><strong>Accessibility Service:</strong> To monitor app usage in real-time</li>
+                <li><strong>Usage Access (PACKAGE_USAGE_STATS):</strong> To track app usage and screen time statistics</li>
+                <li><strong>Overlay Permission (SYSTEM_ALERT_WINDOW):</strong> To display the screen time overlay on top of other apps</li>
+                <li><strong>Foreground Service:</strong> To continuously monitor screen time in the background</li>
                 <li><strong>Notification Access:</strong> To send usage reminders and alerts</li>
+                <li><strong>Wake Lock:</strong> To keep tracking active when screen is off</li>
+                <li><strong>Battery Optimization Exemption:</strong> To ensure continuous tracking</li>
             </ul>
 
             <h3>4.2 Optional Permissions</h3>
             <p>Some features may request additional permissions:</p>
             <ul>
-                <li>Battery optimization exemption</li>
-                <li>Auto-start permission</li>
-                <li>Background app refresh</li>
+                <li><strong>Internet Access:</strong> For app updates and optional analytics (if enabled by user)</li>
+                <li><strong>Storage Access:</strong> For exporting screen time data and reports</li>
+                <li><strong>Vibration:</strong> For notification feedback</li>
             </ul>
 
             <h2>5. Third-Party Services</h2>

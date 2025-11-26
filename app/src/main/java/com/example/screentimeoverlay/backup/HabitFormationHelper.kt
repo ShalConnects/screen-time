@@ -466,7 +466,7 @@ class HabitFormationHelper(private val context: Context) {
             HabitTip("Set app limits", "Use built-in app limits to restrict usage", HabitTipType.STRATEGY),
             HabitTip("Use grayscale mode", "Switch to grayscale to reduce visual appeal", HabitTipType.TECHNIQUE),
             HabitTip("Create phone-free zones", "Designate areas where phones aren't allowed", HabitTipType.ENVIRONMENT),
-            HabitTip("Use a physical alarm", "Replace phone alarm with a physical one", HabitTipType.SUBSTITUTION)
+            HabitTip("Use a physical clock", "Replace phone clock with a physical one", HabitTipType.SUBSTITUTION)
         )
     }
     

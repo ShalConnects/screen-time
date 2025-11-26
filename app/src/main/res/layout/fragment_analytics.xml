@@ -12,6 +12,297 @@
         android:padding="24dp">
 
 
+        <!-- Daily Summary Banner (Enhanced with Goal Progress) -->
+        <LinearLayout
+            android:id="@+id/dailySummaryBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/glass_background"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/dailySummaryTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/daily_summary_title"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"/>
+
+                <ImageButton
+                    android:id="@+id/dailySummaryInfoButton"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_info"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Info about daily summary"
+                    android:tint="@color/text_secondary"
+                    android:padding="4dp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/dailySummaryText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/daily_summary_placeholder"
+                android:textSize="14sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginTop="4dp"/>
+
+            <!-- Quick Enable Button (shown when metrics disabled) -->
+            <Button
+                android:id="@+id/enableDailySummaryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="✨ Enable Daily Summary"
+                android:textSize="14sp"
+                android:textColor="#FFFFFF"
+                android:padding="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/button_glass"
+                android:visibility="gone"/>
+
+            <!-- Goal Progress Section -->
+            <LinearLayout
+                android:id="@+id/goalProgressContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="12dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="4dp">
+
+                    <TextView
+                        android:id="@+id/goalProgressLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Daily Goal"
+                        android:textSize="12sp"
+                        android:textColor="@color/text_secondary"/>
+
+                    <TextView
+                        android:id="@+id/goalProgressText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0%"
+                        android:textSize="12sp"
+                        android:textColor="@color/text_primary"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+                <ProgressBar
+                    android:id="@+id/goalProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressTint="@color/accent_primary"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Quick Stats Cards -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Today's Overview"
+            android:textSize="18sp"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <!-- Today's Total Time Card -->
+            <LinearLayout
+                android:id="@+id/totalTimeCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@drawable/glass_background"
+                android:padding="16dp"
+                android:layout_marginEnd="6dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Time"
+                    android:textSize="11sp"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginBottom="4dp"/>
+
+                <TextView
+                    android:id="@+id/totalTimeValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0h 0m"
+                    android:textSize="20sp"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <!-- Sessions Count Card -->
+            <LinearLayout
+                android:id="@+id/sessionsCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@drawable/glass_background"
+                android:padding="16dp"
+                android:layout_marginStart="6dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sessions"
+                    android:textSize="11sp"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginBottom="4dp"/>
+
+                <TextView
+                    android:id="@+id/sessionsValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="20sp"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <!-- Average Session Card -->
+            <LinearLayout
+                android:id="@+id/avgSessionCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@drawable/glass_background"
+                android:padding="16dp"
+                android:layout_marginEnd="6dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Avg Session"
+                    android:textSize="11sp"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginBottom="4dp"/>
+
+                <TextView
+                    android:id="@+id/avgSessionValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0m"
+                    android:textSize="20sp"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <!-- Focus Score Card -->
+            <LinearLayout
+                android:id="@+id/focusScoreCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@drawable/glass_background"
+                android:padding="16dp"
+                android:layout_marginStart="6dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Focus Score"
+                    android:textSize="11sp"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginBottom="4dp"/>
+
+                <TextView
+                    android:id="@+id/focusScoreValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0%"
+                    android:textSize="20sp"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Charts Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Usage Charts"
+            android:textSize="18sp"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Weekly Usage Bar Chart -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/glass_background"
+            android:padding="16dp"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="This Week's Usage"
+                android:textSize="14sp"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp"/>
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/weeklyUsageChart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+
+        </LinearLayout>
+
         <!-- Historical Views -->
         <TextView
             android:layout_width="wrap_content"
@@ -82,41 +373,18 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"/>
 
-        <LinearLayout
+        <Button
+            android:id="@+id/batteryOptimizationButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="8dp">
-
-            <Button
-                android:id="@+id/batteryOptimizationButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Battery Settings"
-                android:textSize="12sp"
-                android:textColor="#FFFFFF"
-                android:padding="8dp"
-                android:layout_marginEnd="4dp"
-                android:maxLines="2"
-                android:ellipsize="none"
-                android:background="@drawable/button_glass"/>
-
-            <Button
-                android:id="@+id/accessibilityButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Accessibility"
-                android:textSize="12sp"
-                android:textColor="#FFFFFF"
-                android:padding="8dp"
-                android:layout_marginStart="4dp"
-                android:maxLines="2"
-                android:ellipsize="none"
-                android:background="@drawable/button_glass"/>
-
-        </LinearLayout>
+            android:text="Battery Settings"
+            android:textSize="12sp"
+            android:textColor="#FFFFFF"
+            android:padding="8dp"
+            android:layout_marginBottom="8dp"
+            android:maxLines="2"
+            android:ellipsize="none"
+            android:background="@drawable/button_glass"/>
 
         <Button
             android:id="@+id/appFilterButton"
@@ -130,6 +398,49 @@
             android:maxLines="2"
             android:ellipsize="none"
             android:background="@drawable/button_glass"/>
+
+		<!-- Settings (moved from Monitor) -->
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Settings"
+			android:textSize="18sp"
+			android:textColor="@color/text_primary"
+			android:textStyle="bold"
+			android:layout_marginTop="8dp"
+			android:layout_marginBottom="12dp"/>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:layout_marginBottom="8dp">
+
+			<Button
+				android:id="@+id/restartOnboardingButton"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="Restart Onboarding"
+				android:textSize="12sp"
+				android:textColor="#FFFFFF"
+				android:padding="8dp"
+				android:background="@drawable/button_glass"
+				android:layout_marginEnd="4dp"/>
+
+			<Button
+				android:id="@+id/privacyPolicyButton"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="Privacy Policy"
+				android:textSize="12sp"
+				android:textColor="#FFFFFF"
+				android:padding="8dp"
+				android:background="@drawable/button_glass"
+				android:layout_marginStart="4dp"/>
+
+		</LinearLayout>
 
     </LinearLayout>
 
