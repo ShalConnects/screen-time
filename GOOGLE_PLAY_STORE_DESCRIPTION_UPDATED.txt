@@ -17,7 +17,7 @@ KEY FEATURES:
 • App Usage Tracking: Track time spent in each app with detailed breakdowns and categorization
 • Productivity Insights: Understand your digital habits with productivity scores and focus metrics
 • Goal Setting: Set daily screen time goals and receive reminders when you're approaching your limits
-• Export Data: Export your usage data for personal analysis
+• App Timers: Set per-app limits and get alerts when you reach them
 • Privacy-First: All data is stored locally on your device and never shared
 
 ACCESSIBILITY SERVICE:

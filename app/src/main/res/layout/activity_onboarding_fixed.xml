@@ -19,7 +19,7 @@
             android:id="@+id/onboarding_icon"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:src="@drawable/ic_analytics"
+            android:src="@drawable/ic_logo"
             android:layout_marginBottom="24dp" />
 
         <TextView
@@ -37,7 +37,7 @@
             android:id="@+id/onboarding_subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Track your screen time with beautiful overlays and detailed analytics"
+            android:text="See a floating timer on your screen and understand how you spend time"
             android:textSize="16sp"
             android:textColor="@color/secondary_text"
             android:gravity="center"
@@ -231,7 +231,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="• All your data is stored locally on your device\n• We don't collect or share your personal information\n• You can export or delete your data anytime\n• No internet connection required for core features"
+                    android:text="• All your data is stored locally on your device\n• We don't collect or share your personal information\n• Clear app data or uninstall anytime to delete it\n• No internet connection required for core features"
                     android:textSize="14sp"
                     android:textColor="@color/primary_text"
                     android:lineSpacingExtra="4dp" />

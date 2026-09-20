@@ -3,261 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - Screen Time Overlay</title>
+    <title>Privacy Policy - Screen Time Tracker</title>
+    <link rel="icon" href="app_icon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
-        .privacy-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            margin-top: 50px;
-            margin-bottom: 50px;
+        .privacy-content a {
+            color: var(--accent);
         }
-        
-        .privacy-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .privacy-header h1 {
-            color: #fff;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-        
-        .privacy-header p {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.1rem;
-        }
-        
-        .privacy-content {
-            color: #fff;
-            line-height: 1.8;
-        }
-        
-        .privacy-content h2 {
-            color: #4CAF50;
-            font-size: 1.8rem;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #4CAF50;
-            padding-bottom: 10px;
-        }
-        
-        .privacy-content h3 {
-            color: #81C784;
-            font-size: 1.4rem;
-            margin-top: 25px;
-            margin-bottom: 10px;
-        }
-        
-        .privacy-content p {
-            margin-bottom: 15px;
-            text-align: justify;
-        }
-        
-        .privacy-content ul {
-            margin-left: 20px;
-            margin-bottom: 15px;
-        }
-        
-        .privacy-content li {
-            margin-bottom: 8px;
-        }
-        
-        .highlight {
-            background: rgba(76, 175, 80, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 4px solid #4CAF50;
-            margin: 20px 0;
-        }
-        
         .contact-info {
-            background: rgba(33, 150, 243, 0.2);
-            padding: 20px;
+            background: rgba(91, 157, 255, 0.1);
+            border-left: 3px solid var(--focus);
             border-radius: 10px;
-            border-left: 4px solid #2196F3;
-            margin: 20px 0;
-        }
-        
-        .back-button {
-            display: inline-block;
-            background: linear-gradient(135deg, #4CAF50, #45a049);
-            color: white;
-            padding: 12px 24px;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            margin-top: 30px;
-        }
-        
-        .back-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+            padding: 1rem;
+            margin: 1.25rem 0;
+            color: var(--text);
         }
     </style>
 </head>
-<body>
+<body class="privacy-page">
     <div class="privacy-container">
         <div class="privacy-header">
             <h1>Privacy Policy</h1>
-            <p>Screen Time Overlay - Last updated: November 2025</p>
+            <p>Screen Time Tracker — Last updated: September 2026</p>
         </div>
-        
+
         <div class="privacy-content">
             <div class="highlight">
-                <p><strong>Your privacy is important to us.</strong> This Privacy Policy explains how Screen Time Overlay collects, uses, and protects your information when you use our Android application and related services.</p>
+                <p><strong>Your privacy is important to us.</strong> This Privacy Policy explains how Screen Time Tracker handles information when you use our Android application. The app is designed to keep your usage data on your device.</p>
             </div>
 
-            <h2>1. Information We Collect</h2>
-            
+            <h2>1. Information Processed On Your Device</h2>
+
             <h3>1.1 Usage Statistics</h3>
-            <p>Our app collects screen time data to provide you with insights about your device usage. This includes:</p>
+            <p>To show screen time insights, the app reads and stores on-device data such as:</p>
             <ul>
-                <li>Time spent on different applications</li>
+                <li>Time spent in applications</li>
                 <li>Session duration and frequency</li>
-                <li>App launch times and usage patterns</li>
-                <li>Device interaction data (screen on/off events)</li>
+                <li>App usage patterns used for local insights and reminders</li>
             </ul>
 
-            <h3>1.2 Device Information</h3>
-            <p>We may collect certain device information to improve app functionality:</p>
+            <h3>1.2 Optional Extra Metrics (Accessibility)</h3>
+            <p>If you opt in, the optional Accessibility feature may count taps, estimate scroll distance, and estimate words typed. It does not read passwords or send content off your device. You can turn this off at any time.</p>
+
+            <h3>1.3 Device And Permission Status</h3>
+            <p>The app may read the following locally so features work correctly:</p>
             <ul>
-                <li>Device model and operating system version</li>
-                <li>App version and installation date</li>
-                <li>Battery optimization settings</li>
-                <li>Usage statistics permissions status</li>
-                <li>Overlay permission status</li>
+                <li>Device model and Android version (as exposed by the system APIs we use)</li>
+                <li>App version</li>
+                <li>Battery optimization status</li>
+                <li>Usage Access, overlay, notification, and accessibility permission status</li>
             </ul>
 
-            <h3>1.3 Personal Settings</h3>
-            <p>The app stores your personal preferences locally on your device:</p>
+            <h3>1.4 Personal Settings</h3>
+            <p>Preferences are stored locally on your device, including:</p>
             <ul>
-                <li>Custom goals and limits</li>
-                <li>Display preferences and themes</li>
-                <li>Notification settings</li>
+                <li>Daily goals, app timers, and limits</li>
+                <li>Display and overlay preferences</li>
+                <li>Notification and break reminder settings</li>
                 <li>App filter configurations</li>
             </ul>
 
-            <h2>2. How We Use Your Information</h2>
-            
-            <h3>2.1 Core Functionality</h3>
-            <p>We use collected data to:</p>
-            <ul>
-                <li>Display accurate screen time statistics</li>
-                <li>Provide personalized insights and recommendations</li>
-                <li>Send notifications about usage limits and goals</li>
-                <li>Generate reports and analytics</li>
-            </ul>
+            <h2>2. How We Use This Information</h2>
 
-            <h3>2.2 App Improvement</h3>
-            <p>We may use anonymized data to:</p>
+            <p>All processing happens on your device to:</p>
             <ul>
-                <li>Improve app performance and user experience</li>
-                <li>Develop new features and functionality</li>
-                <li>Fix bugs and technical issues</li>
-                <li>Optimize battery usage and system resources</li>
+                <li>Display screen time statistics and an optional overlay</li>
+                <li>Provide local insights, goals, and reminders</li>
+                <li>Send on-device notifications you enable</li>
             </ul>
+            <p>We do <strong>not</strong> operate cloud analytics, ads, or crash-reporting SDKs in this app, and we do not transmit your usage statistics to our servers.</p>
 
-            <h2>3. Data Storage and Security</h2>
-            
+            <h2>3. Data Storage And Security</h2>
+
             <h3>3.1 Local Storage</h3>
-            <p>All your personal data is stored locally on your device. We do not transmit your usage statistics to external servers without your explicit consent.</p>
+            <p>Usage data and settings are stored locally in the app’s private storage on your device. The app does not require an internet connection for core features and does not include an INTERNET permission for uploading your usage data.</p>
 
-            <h3>3.2 Data Encryption</h3>
-            <p>We implement appropriate security measures to protect your data:</p>
+            <h3>3.2 Security</h3>
+            <p>Data is protected by Android’s app sandbox. Only this app (and the system, when you grant permissions) can access its private storage.</p>
+
+            <h3>3.3 Data Retention And Deletion</h3>
+            <p>Data remains on your device while the app is installed. Uninstalling the app deletes the app’s local data. Clearing the app’s storage in Android Settings also removes local data.</p>
+
+            <h2>4. Permissions</h2>
+
+            <h3>4.1 Permissions Used</h3>
             <ul>
-                <li>Local data encryption for sensitive information</li>
-                <li>Secure storage of user preferences</li>
-                <li>Protected access to system permissions</li>
+                <li><strong>Usage Access (PACKAGE_USAGE_STATS):</strong> Track app usage and screen time</li>
+                <li><strong>Display Over Other Apps (SYSTEM_ALERT_WINDOW):</strong> Show the optional floating overlay</li>
+                <li><strong>Foreground Service / Special Use:</strong> Keep on-device monitoring running while you have tracking started, with a visible notification</li>
+                <li><strong>Notifications (POST_NOTIFICATIONS):</strong> Send usage reminders, limits, and break suggestions you enable</li>
+                <li><strong>Vibrate:</strong> Optional notification feedback</li>
+                <li><strong>Battery Optimization Exemption:</strong> Optional; helps reliable tracking on some devices</li>
+                <li><strong>Boot Completed:</strong> Optionally restart tracking after reboot if you left it running</li>
             </ul>
 
-            <h3>3.3 Data Retention</h3>
-            <p>Your data is retained for as long as you use the app. You can delete all data by uninstalling the application or using the app's data reset feature.</p>
-
-            <h2>4. Permissions and Access</h2>
-            
-            <h3>4.1 Required Permissions</h3>
-            <p>Our app requires the following permissions to function properly:</p>
-            <ul>
-                <li><strong>Usage Access (PACKAGE_USAGE_STATS):</strong> To track app usage and screen time statistics</li>
-                <li><strong>Overlay Permission (SYSTEM_ALERT_WINDOW):</strong> To display the screen time overlay on top of other apps</li>
-                <li><strong>Foreground Service:</strong> To continuously monitor screen time in the background</li>
-                <li><strong>Notification Access:</strong> To send usage reminders and alerts</li>
-                <li><strong>Wake Lock:</strong> To keep tracking active when screen is off</li>
-                <li><strong>Battery Optimization Exemption:</strong> To ensure continuous tracking</li>
-            </ul>
-
-            <h3>4.2 Optional Permissions</h3>
-            <p>Some features may request additional permissions:</p>
-            <ul>
-                <li><strong>Internet Access:</strong> For app updates (if available in future versions)</li>
-                <li><strong>Storage Access:</strong> For exporting screen time data and reports</li>
-                <li><strong>Vibration:</strong> For notification feedback</li>
-            </ul>
+            <h3>4.2 Optional Accessibility Service</h3>
+            <p>Used only if you enable Extra metrics. It counts interaction events for optional insights and is not required for screen time tracking.</p>
 
             <h2>5. Data Backup</h2>
-            
-            <p>Our app uses Android's built-in backup system (Auto Backup) to help preserve your app settings when you switch devices or reinstall the app:</p>
-            <ul>
-                <li><strong>Android Auto Backup:</strong> Your app settings and preferences may be backed up to your Google account as part of Android's standard backup system</li>
-                <li><strong>Local Storage Only:</strong> All screen time data and usage statistics are stored locally on your device and are not included in cloud backups</li>
-                <li><strong>Privacy:</strong> Sensitive data (app categories, filters, usage stats) is explicitly excluded from cloud backups for your privacy</li>
-            </ul>
-            <p><strong>Note:</strong> We do not use any third-party analytics, crash reporting, or cloud synchronization services. All data processing happens locally on your device.</p>
 
-            <h2>6. Your Rights and Choices</h2>
-            
-            <h3>6.1 Data Control</h3>
-            <p>You have the right to:</p>
-            <ul>
-                <li>View all data collected by the app</li>
-                <li>Export your data in standard formats</li>
-                <li>Delete specific data or all data</li>
-                <li>Control which apps are tracked through app filter settings</li>
-            </ul>
+            <p>Android Auto Backup may preserve some non-sensitive app preferences when you switch devices. Usage statistics and related behavioral data are excluded from cloud backup where possible. We do not run our own cloud sync.</p>
 
-            <h3>6.2 Privacy Settings</h3>
-            <p>You can control your privacy through app settings:</p>
+            <h2>6. Your Choices</h2>
+
             <ul>
-                <li>Configure which apps are tracked using app filters</li>
-                <li>Enable or disable optional accessibility metrics tracking</li>
+                <li>View usage data inside the app</li>
+                <li>Control which apps are included via filters</li>
+                <li>Enable or disable Extra metrics (Accessibility)</li>
                 <li>Manage notification preferences</li>
-                <li>Control data export and sharing options</li>
+                <li>Stop the overlay / foreground service at any time</li>
+                <li>Delete all app data by clearing storage or uninstalling</li>
             </ul>
 
             <h2>7. Children's Privacy</h2>
-            
-            <p>Our app is not intended for children under 13. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us immediately.</p>
 
-            <h2>8. Changes to This Policy</h2>
-            
-            <p>We may update this Privacy Policy from time to time. We will notify you of any changes by:</p>
-            <ul>
-                <li>Posting the new Privacy Policy on this page</li>
-                <li>Updating the "Last updated" date</li>
-                <li>Sending you a notification through the app</li>
-            </ul>
+            <p>This app is not directed at children under 13. We do not knowingly collect personal information from children under 13.</p>
 
-            <h2>9. Contact Information</h2>
-            
+            <h2>8. Changes To This Policy</h2>
+
+            <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated “Last updated” date.</p>
+
+            <h2>9. Contact</h2>
+
             <div class="contact-info">
-                <p>If you have any questions about this Privacy Policy or our data practices, please contact us:</p>
+                <p>Questions about this policy:</p>
                 <ul>
                     <li><strong>Email:</strong> privacy@screentimeoverlay.com</li>
-                    <li><strong>GitHub:</strong> <a href="https://github.com/ShalConnects/screen-time" style="color: #4CAF50;">https://github.com/ShalConnects/screen-time</a></li>
-                    <li><strong>Issues:</strong> Report privacy concerns through our GitHub issues page</li>
+                    <li><strong>GitHub:</strong> <a href="https://github.com/ShalConnects/screen-time">https://github.com/ShalConnects/screen-time</a></li>
                 </ul>
             </div>
 
             <div class="highlight">
-                <p><strong>Note:</strong> This privacy policy applies to the Screen Time Overlay Android application and related web services. By using our app, you agree to the collection and use of information in accordance with this policy.</p>
+                <p><strong>Note:</strong> This privacy policy applies to the Screen Time Tracker Android application. By using the app, you agree to this policy.</p>
             </div>
 
             <a href="index.html" class="back-button">← Back to Home</a>

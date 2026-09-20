@@ -251,7 +251,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="• All your data is stored locally on your device\n• We don't collect or share your personal information\n• You can export or delete your data anytime\n• No internet connection required for core features"
+                        android:text="• All your data is stored locally on your device\n• We don't collect or share your personal information\n• Clear app data or uninstall anytime to delete it\n• No internet connection required for core features"
                         android:textSize="14sp"
                         android:textColor="@color/primary_text"
                         android:lineSpacingExtra="4dp" />

@@ -4,6 +4,23 @@
     <exclude domain="sharedpref" path="app_categories.xml"/>
     <exclude domain="sharedpref" path="app_filters.xml"/>
     <exclude domain="sharedpref" path="usage_stats.xml"/>
+    <exclude domain="sharedpref" path="session_tracker.xml"/>
+    <exclude domain="sharedpref" path="overlay_settings.xml"/>
+    <exclude domain="sharedpref" path="metrics_store.xml"/>
+    <exclude domain="sharedpref" path="ui_prefs.xml"/>
+    <exclude domain="sharedpref" path="daily_metrics_guard.xml"/>
+    <exclude domain="sharedpref" path="historical_data.xml"/>
+    <exclude domain="sharedpref" path="productivity_scorer.xml"/>
+    <exclude domain="sharedpref" path="usage_patterns.xml"/>
+    <exclude domain="sharedpref" path="notification_scheduler.xml"/>
+    <exclude domain="sharedpref" path="notification_prefs.xml"/>
+    <exclude domain="sharedpref" path="notification_settings.xml"/>
+    <exclude domain="sharedpref" path="break_prefs.xml"/>
+    <exclude domain="sharedpref" path="reminder_tone.xml"/>
+    <exclude domain="sharedpref" path="onboarding_prefs.xml"/>
+    <exclude domain="sharedpref" path="daily_usage_store.xml"/>
+    <exclude domain="sharedpref" path="daily_usage_meta.xml"/>
+    <exclude domain="sharedpref" path="app_timers.xml"/>
     <exclude domain="database" path="screentime.db"/>
     <exclude domain="file" path="exports/"/>
 </full-backup-content>
